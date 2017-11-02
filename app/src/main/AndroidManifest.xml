@@ -17,7 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".SelectRole" />
-        <activity android:name=".Login"></activity>
+        <activity android:name=".Login" />
+        <activity android:name=".TeacherActivity" />
+        <activity android:name=".StudentActivity"></activity>
     </application>
 
 </manifest>
