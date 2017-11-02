@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,6 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/common_full_open_on_phone"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="32dp" />
-</android.support.constraint.ConstraintLayout>
+        tools:layout_editor_absoluteX="199dp"
+        tools:layout_editor_absoluteY="199dp" />
+</FrameLayout>

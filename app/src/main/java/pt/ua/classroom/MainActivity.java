@@ -1,7 +1,9 @@
 package pt.ua.classroom;
 
 import android.content.Intent;
-import android.preference.PreferenceManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
@@ -10,11 +12,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -39,20 +43,33 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-        if (mUser == null) {
-            Log.d(TAG, "null");
-            // Not signed in, launch the Sign In activity
-            startActivity(new Intent(this, Login.class));
-            finish();
-            return;
-        } else {
-            mUsername = mUser.getDisplayName();
-            Log.d(TAG, mUsername);
-            Log.d(TAG, mUser.getEmail());
-            if (mUser.getPhotoUrl() != null) {
-                mPhotoUrl = mUser.getPhotoUrl().toString();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    mUsername = mUser.getDisplayName();
+                    Log.d(TAG, mUsername);
+                    Log.d(TAG, mUser.getEmail());
+                    if (mUser.getPhotoUrl() != null) {
+                        mPhotoUrl = mUser.getPhotoUrl().toString();
+                        setImage();
+                    }
+                    selectRole();
+                    finish();
+
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    // Not signed in, launch the Sign In activity
+                    doLogin();
+                    finish();
+                }
+                // ...
             }
-        }
+        };
 
         Log.d(TAG, "google");
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -60,6 +77,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
         Log.d(TAG, "google2");
+
+
+    }
+
+    public void doLogin(){
+        startActivity(new Intent(this, Login.class));
+    }
+
+    public void selectRole(){
+        startActivity(new Intent(this, SelectRole.class));
+    }
+
+    public void setImage(){
+        ImageView i = (ImageView)findViewById(R.id.imageView);
+        AsyncTask<String, Integer, Bitmap> bitmap = new Image().execute(mPhotoUrl);
+        try {
+            i.setImageBitmap(bitmap.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
