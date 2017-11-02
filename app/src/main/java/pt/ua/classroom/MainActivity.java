@@ -2,9 +2,10 @@ package pt.ua.classroom;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.Auth;
@@ -17,6 +18,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.ExecutionException;
 
@@ -27,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private String mUsername;
     private GoogleApiClient mGoogleApiClient;
     private String mPhotoUrl;
+    private String mId;
+    DatabaseReference database;
 
     // Firebase instance variables
     private FirebaseAuth mAuth;
@@ -42,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         Log.d(TAG, "anon");
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance().getReference();
         mUser = mAuth.getCurrentUser();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -50,14 +59,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    mUsername = mUser.getDisplayName();
-                    Log.d(TAG, mUsername);
-                    Log.d(TAG, mUser.getEmail());
+                    mUsername = mUser.getEmail();
                     if (mUser.getPhotoUrl() != null) {
                         mPhotoUrl = mUser.getPhotoUrl().toString();
                         setImage();
                     }
-                    selectRole();
+                    nextActivity();
                     finish();
 
                 } else {
@@ -70,13 +77,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 // ...
             }
         };
-
-        Log.d(TAG, "google");
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
-        Log.d(TAG, "google2");
 
 
     }
@@ -85,18 +89,53 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         startActivity(new Intent(this, Login.class));
     }
 
-    public void selectRole(){
-        startActivity(new Intent(this, SelectRole.class));
+    public void nextActivity(){
+        //startActivity(new Intent(this, SelectRole.class));
+        Log.d(TAG, String.valueOf(database));
+        DatabaseReference ref= database.child("Users");
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String temp = ds.getKey();
+                    if(ds.child("e-mail").getValue(String.class)==mUsername) {
+                        mId=temp;
+                        if (ds.child("role")==null){
+                            selectRole();
+                        }
+                        else if(ds.child("role").getValue(String.class).equals("teacher"))
+                            startTeacher();
+                        startStudent();
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        ref.addListenerForSingleValueEvent(eventListener);
     }
 
+    public void selectRole(){
+        startActivity(new Intent(this,SelectRole.class));
+    }
+
+    public void startTeacher(){
+
+    }
+
+    public void startStudent(){
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     public void setImage(){
         ImageView i = (ImageView)findViewById(R.id.imageView);
         AsyncTask<String, Integer, Bitmap> bitmap = new Image().execute(mPhotoUrl);
         try {
             i.setImageBitmap(bitmap.get());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
