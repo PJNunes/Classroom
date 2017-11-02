@@ -28,8 +28,6 @@ public class Login extends AppCompatActivity implements
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
-    private SignInButton mSignInButton;
-
     private GoogleApiClient mGoogleApiClient;
 
     // Firebase instance variables
@@ -41,7 +39,7 @@ public class Login extends AppCompatActivity implements
         setContentView(R.layout.activity_login);
 
         // Assign fields
-        mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        SignInButton mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
 
         // Set click listeners
         mSignInButton.setOnClickListener(this);

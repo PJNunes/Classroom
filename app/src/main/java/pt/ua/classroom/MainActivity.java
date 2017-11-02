@@ -4,20 +4,18 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-
-import com.google.android.gms.auth.api.Auth;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private static final String TAG = "MainActivity";
     public static final String ANONYMOUS = "anonymous";
     private String mUsername;
-    private GoogleApiClient mGoogleApiClient;
     private String mPhotoUrl;
     private String mId="";
     private String role="";
@@ -77,12 +74,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 // ...
             }
         };
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API)
-                .build();
-
-
     }
 
     public void doLogin(){

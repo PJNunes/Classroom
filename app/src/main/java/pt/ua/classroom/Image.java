@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ImageView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +13,7 @@ import java.net.URL;
  * Created by Pedro Nunes.
  */
 
-public class Image extends AsyncTask<String, Integer, Bitmap>{
+class Image extends AsyncTask<String, Integer, Bitmap>{
 
     private static final String TAG = "Image";
 
@@ -34,8 +33,4 @@ public class Image extends AsyncTask<String, Integer, Bitmap>{
         //
     }
 
-    // This is called when doInBackground() is finished
-    protected void onPostExecute(Long result) {
-        //
-    }
 }
