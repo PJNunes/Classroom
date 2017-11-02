@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private String mUsername;
     private GoogleApiClient mGoogleApiClient;
     private String mPhotoUrl;
-    private String mId;
+    private String mId="";
     private String role="";
     DatabaseReference database;
 
