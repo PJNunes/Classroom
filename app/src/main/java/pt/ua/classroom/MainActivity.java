@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private GoogleApiClient mGoogleApiClient;
     private String mPhotoUrl;
     private String mId;
+    private String role="";
     DatabaseReference database;
 
     // Firebase instance variables
@@ -65,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         setImage();
                     }
                     nextActivity();
-                    finish();
 
                 } else {
                     // User is signed out
@@ -98,14 +98,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     String temp = ds.getKey();
-                    if(ds.child("e-mail").getValue(String.class)==mUsername) {
+                    Log.d(TAG, ds.child("e-mail").getValue(String.class));
+                    Log.d(TAG, mUsername);
+                    if(ds.child("e-mail").getValue(String.class).equals(mUsername)) {
                         mId=temp;
-                        if (ds.child("role")==null){
-                            selectRole();
-                        }
-                        else if(ds.child("role").getValue(String.class).equals("teacher"))
-                            startTeacher();
-                        startStudent();
+                        role =ds.child("role").getValue(String.class);
+                        Log.d(TAG, role);
                         break;
                     }
                 }
@@ -115,6 +113,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             public void onCancelled(DatabaseError databaseError) {}
         };
         ref.addListenerForSingleValueEvent(eventListener);
+        Log.d(TAG, role);
+        if (role==null)
+            selectRole();
+        else if(role.equals("teacher"))
+            startTeacher();
+        else
+            startStudent();
     }
 
     public void selectRole(){
@@ -122,11 +127,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     public void startTeacher(){
-
+        startActivity(new Intent(this,TeacherActivity.class));
     }
 
     public void startStudent(){
-
+        Log.d(TAG, "here");
+        startActivity(new Intent(this,StudentActivity.class));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
