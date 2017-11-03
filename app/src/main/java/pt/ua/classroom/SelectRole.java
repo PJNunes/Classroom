@@ -1,6 +1,7 @@
 package pt.ua.classroom;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 
 public class SelectRole extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "SelectRole";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +33,18 @@ public class SelectRole extends AppCompatActivity implements View.OnClickListene
         switch (v.getId()) {
 
             case R.id.button_teacher:
+                Database.setRole("teacher");
                 teacherActivity();
-                Log.d("Role --> teacher", "se está ejecutando");
                 finish();
                 break;
 
             case R.id.button_student:
+                Database.setRole("student");
                 studentActivity();
-                Log.d("Role --> student", "se está ejecutando");
                 finish();
                 break;
 
             default:
-                break;
         }
 
     }

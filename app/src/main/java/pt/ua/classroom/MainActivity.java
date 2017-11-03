@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.ExecutionException;
@@ -28,15 +28,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private static final String TAG = "MainActivity";
     public static final String ANONYMOUS = "anonymous";
-    private String mUsername;
-    private String mPhotoUrl;
     private String mId="";
-    private String role="";
-    DatabaseReference database;
+    private MainActivity classe;
 
     // Firebase instance variables
     private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
+    private static FirebaseUser mUser;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
@@ -44,11 +41,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Set default username is anonymous.
-        mUsername = ANONYMOUS;
-        Log.d(TAG, "anon");
+        classe=this;
+
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance().getReference();
         mUser = mAuth.getCurrentUser();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -57,12 +53,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    mUsername = mUser.getEmail();
+                    Database.setId(classe,mUser.getDisplayName(),mUser.getEmail(),mUser.getPhotoUrl());
                     if (mUser.getPhotoUrl() != null) {
-                        mPhotoUrl = mUser.getPhotoUrl().toString();
                         setImage();
                     }
-                    nextActivity();
 
                 } else {
                     // User is signed out
@@ -71,9 +65,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     doLogin();
                     finish();
                 }
-                // ...
             }
         };
+
     }
 
     public void doLogin(){
@@ -81,55 +75,41 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     public void nextActivity(){
-        //startActivity(new Intent(this, SelectRole.class));
-        Log.d(TAG, String.valueOf(database));
-        DatabaseReference ref= database.child("Users");
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String temp = ds.getKey();
-                    Log.d(TAG, ds.child("e-mail").getValue(String.class));
-                    Log.d(TAG, mUsername);
-                    if(ds.child("e-mail").getValue(String.class).equals(mUsername)) {
-                        mId=temp;
-                        role =ds.child("role").getValue(String.class);
-                        Log.d(TAG, role);
-                        break;
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        };
-        ref.addListenerForSingleValueEvent(eventListener);
-        Log.d(TAG, role);
-        if (role==null)
+        String role= Database.getRole();
+        if(role==null) {
+            Log.d(TAG, "null");
             selectRole();
-        else if(role.equals("teacher"))
-            startTeacher();
-        else
-            startStudent();
+            finish();
+        }
+        else if(role.equals("teacher")){
+            Log.d(TAG, role);
+            teacherActivity();
+            finish();
+        }
+        else if(role.equals("student")){
+            Log.d(TAG, role);
+            studentActivity();
+            finish();
+        }
     }
 
     public void selectRole(){
         startActivity(new Intent(this,SelectRole.class));
     }
 
-    public void startTeacher(){
-        startActivity(new Intent(this,TeacherActivity.class));
+    public void teacherActivity(){
+        startActivity(new Intent(this, TeacherActivity.class));
     }
 
-    public void startStudent(){
-        Log.d(TAG, "here");
-        startActivity(new Intent(this,StudentActivity.class));
+    public void studentActivity(){
+        startActivity(new Intent(this, StudentActivity.class));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     public void setImage(){
         ImageView i = (ImageView)findViewById(R.id.imageView);
-        AsyncTask<String, Integer, Bitmap> bitmap = new Image().execute(mPhotoUrl);
+        AsyncTask<String, Integer, Bitmap> bitmap = new Image().execute(String.valueOf(Database.getPhoto()));
         try {
             i.setImageBitmap(bitmap.get());
         } catch (InterruptedException | ExecutionException e) {
