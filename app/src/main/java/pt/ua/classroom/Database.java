@@ -21,8 +21,15 @@ class Database {
 
     private static DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     private static final String TAG = "Database";
-    private static String id,role,name,email;
+    private static String userid,role,name,email,classeid;
     private static Uri photoUrl;
+
+    private static void createUser(int id){
+        Map<String,Object> rm= new HashMap<>();
+        rm.put("name",name);
+        rm.put("e-mail",email);
+        database.child("Users").child("user"+id).updateChildren(rm);
+    }
 
     static void setId(final MainActivity classe, String displayName, String displayEmail, Uri displayPhotoUrl){
         Log.d(TAG, String.valueOf(database));
@@ -33,21 +40,21 @@ class Database {
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                id="";
+                userid="";
                 int ctr=0;
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     ctr++;
                     String temp = ds.getKey();
                     if(ds.child("e-mail").getValue(String.class).equals(email)) {
-                        id=temp;
-                        Log.d(TAG, id);
+                        userid=temp;
+                        Log.d(TAG, userid);
                         role=ds.child("role").getValue(String.class);
                         break;
                     }
                 }
-                if(id.equals("")){
+                if(userid.equals("")){
                     createUser(ctr+1);
-                    id="user"+(ctr+1);
+                    userid="user"+(ctr+1);
                     role=null;
                 }
 
@@ -60,22 +67,19 @@ class Database {
         ref.addListenerForSingleValueEvent(eventListener);
     }
 
-    private static void createUser(int id){
-        Map<String,Object> rm= new HashMap<>();
-        rm.put("name",name);
-        rm.put("e-mail",email);
-        database.child("Users").child("user"+id).updateChildren(rm);
-    }
-
     static void setRole(String role) {
         Database.role = role;
         Map<String,Object> rm= new HashMap<>();
         rm.put("role",role);
-        database.child("Users").child(id).updateChildren(rm);
+        database.child("Users").child(userid).updateChildren(rm);
+    }
+
+    public static void setClasseid(String id) {
+        classeid = id;
     }
 
     public static String getId() {
-        return id;
+        return userid;
     }
 
     static String getRole() {
@@ -95,15 +99,13 @@ class Database {
     }
 
     static void getTeachingClasses(final MainActivity activity) {
-
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                DataSnapshot teachingClasses = dataSnapshot.child("Users").child(id).child("teachingClasses");
+                DataSnapshot teachingClasses = dataSnapshot.child("Users").child(userid).child("teachingClasses");
                 String classid;
                 for(DataSnapshot d : teachingClasses.getChildren()) {
-                    classid = d.getKey();
-                    Classe.addClasse((String) dataSnapshot.child("Classes").child(classid).child("name").getValue());
+                    Classe.addClasse((String) dataSnapshot.child("Classes").child(d.getKey()).child("name").getValue(),d.getKey());
                 }
                 activity.teacherActivity();
             }
@@ -114,12 +116,14 @@ class Database {
     }
 
     static void getTeachingClasses(final SelectRole activity) {
-        DatabaseReference classes = database.child("Users").child(id).child("teachingClasses");
-        classes.addListenerForSingleValueEvent(new ValueEventListener() {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot d : dataSnapshot.getChildren())
-                    Classe.addClasse(d.getKey());
+                DataSnapshot teachingClasses = dataSnapshot.child("Users").child(userid).child("teachingClasses");
+                String classid;
+                for(DataSnapshot d : teachingClasses.getChildren()) {
+                    Classe.addClasse((String) dataSnapshot.child("Classes").child(d.getKey()).child("name").getValue(),d.getKey());
+                }
                 activity.teacherActivity();
             }
 

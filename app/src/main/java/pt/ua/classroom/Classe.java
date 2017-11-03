@@ -9,15 +9,20 @@ import java.util.ArrayList;
 
 public class Classe implements Serializable {
     private static final long serialVersionUID = -1213949467658913456L;
-    private String title;
+    private String title,id;
     private static ArrayList<Classe> classes = new ArrayList<>();
 
-    private Classe(String title) {
+    private Classe(String title,String id) {
         this.title = title;
+        this.id = id;
     }
 
     String getTitle() {
         return title;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override
@@ -29,7 +34,7 @@ public class Classe implements Serializable {
         return classes;
     }
 
-    static void addClasse(String name) {
-        classes.add(new Classe(name));
+    static void addClasse(String name, String id) {
+        classes.add(new Classe(name,id));
     }
 }

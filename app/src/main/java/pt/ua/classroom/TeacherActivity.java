@@ -30,10 +30,8 @@ public class TeacherActivity extends AppCompatActivity implements ClassesListFra
 
     // Handles the event when the fragment list item is selected
     @Override
-    public void onItemSelected(Classe item) {
-        // launch detail activity using intent
-    //    Intent i = new Intent(this, ItemDetailActivity.class);
-        //startActivity(i);
-
+    public void onItemSelected(Classe classe) {
+        Database.setClasseid(classe.getId());
+        //startActivity(new Intent(this, ItemDetailActivity.class););
     }
 }
