@@ -3,6 +3,7 @@ package pt.ua.classroom;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,9 @@ import java.util.ArrayList;
  */
 
 public class ClassesListFragment extends Fragment {
+
+    private static final String TAG = "ClassesListFragment";
+
     private ArrayAdapter<Classe> adapterItems;
     private ListView lvItems;
     private OnItemSelectedListener listener;
@@ -41,6 +45,7 @@ public class ClassesListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Create arraylist from item fixtures
         ArrayList<Classe> items = Classe.getClasses();
+        Log.d(TAG, String.valueOf(items.size()));
         adapterItems = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_activated_1, items);
     }

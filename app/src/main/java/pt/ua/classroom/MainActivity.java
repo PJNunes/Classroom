@@ -10,6 +10,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -71,6 +74,27 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.log_out:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this, Login.class));
+                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     public void doLogin(){
         startActivity(new Intent(this, Login.class));
     }
@@ -95,11 +119,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     public void selectRole(){
         startActivity(new Intent(this,SelectRole.class));
-    }
-
-    public void teacherActivity(){
-        startActivity(new Intent(this,TeacherActivity.class));
-        finish();
     }
 
     public void studentActivity(){

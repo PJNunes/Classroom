@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class Database {
+class Database{
 
     private static DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     private static final String TAG = "Database";
@@ -98,16 +99,19 @@ class Database {
         return photoUrl;
     }
 
-    static void getTeachingClasses(final MainActivity activity) {
+    static <T extends AppCompatActivity> void getTeachingClasses(final T activity) {
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                DataSnapshot teachingClasses = dataSnapshot.child("Users").child(userid).child("teachingClasses");
-                String classid;
-                for(DataSnapshot d : teachingClasses.getChildren()) {
-                    Classe.addClasse((String) dataSnapshot.child("Classes").child(d.getKey()).child("name").getValue(),d.getKey());
+                if(Classe.getClasses().size()==0) {
+                    DataSnapshot teachingClasses = dataSnapshot.child("Users").child(userid).child("teachingClasses");
+                    String classid;
+                    for (DataSnapshot d : teachingClasses.getChildren()) {
+                        Classe.addClasse((String) dataSnapshot.child("Classes").child(d.getKey()).child("name").getValue(), d.getKey());
+                    }
                 }
-                activity.teacherActivity();
+                activity.startActivity(new Intent(activity,TeacherActivity.class));
+                activity.finish();
             }
 
             @Override
@@ -115,20 +119,4 @@ class Database {
         });
     }
 
-    static void getTeachingClasses(final SelectRole activity) {
-        database.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                DataSnapshot teachingClasses = dataSnapshot.child("Users").child(userid).child("teachingClasses");
-                String classid;
-                for(DataSnapshot d : teachingClasses.getChildren()) {
-                    Classe.addClasse((String) dataSnapshot.child("Classes").child(d.getKey()).child("name").getValue(),d.getKey());
-                }
-                activity.teacherActivity();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-    }
 }
