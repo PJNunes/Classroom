@@ -1,9 +1,7 @@
 package pt.ua.classroom;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -13,9 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 class Database{
@@ -75,7 +71,7 @@ class Database{
         database.child("Users").child(userid).updateChildren(rm);
     }
 
-    public static void setClasseid(String id) {
+    static void setClasseid(String id) {
         classeid = id;
     }
 
@@ -119,4 +115,33 @@ class Database{
         });
     }
 
+    static void addClasse(final TeacherActivity activity, final String s){
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataSnapshot classes = dataSnapshot.child("Classes");
+
+                int ctr= (int) classes.getChildrenCount();
+
+                String tempClassId ="class"+(ctr+1);
+
+                //create Classe
+                Map<String,Object> map= new HashMap<>();
+                map.put("name",s);
+                database.child("Classes").child(tempClassId).updateChildren(map);
+
+                //add class to teaching
+                map= new HashMap<>();
+                map.put(tempClassId,1);
+                database.child("Users").child(userid).child("teachingClasses").updateChildren(map);
+
+                //add classe to table
+                Classe.addClasse(s,tempClassId);
+                activity.recreate();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
 }
