@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -84,13 +85,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
         else if(role.equals("teacher")){
             Log.d(TAG, role);
-            teacherActivity();
-            finish();
+            Database.getTeachingClasses(this);
         }
         else if(role.equals("student")){
             Log.d(TAG, role);
             studentActivity();
-            finish();
         }
     }
 
@@ -99,7 +98,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     public void teacherActivity(){
-        startActivity(new Intent(this, TeacherActivity.class));
+        startActivity(new Intent(this,TeacherActivity.class));
+        finish();
     }
 
     public void studentActivity(){

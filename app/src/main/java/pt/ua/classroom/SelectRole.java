@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.List;
+
 public class SelectRole extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "SelectRole";
@@ -50,7 +52,7 @@ public class SelectRole extends AppCompatActivity implements View.OnClickListene
 
 
     public void teacherActivity(){
-        startActivity(new Intent(this, TeacherActivity.class));
+        Database.getTeachingClasses(this);
     }
 
     public void studentActivity(){
