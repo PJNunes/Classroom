@@ -50,7 +50,7 @@ class Database {
                 }
                 if(id.equals("")){
                     createUser(ctr+1);
-                    id="id"+(ctr+1);
+                    id="user"+(ctr+1);
                     role=null;
                 }
 
@@ -67,7 +67,7 @@ class Database {
         Map<String,Object> rm= new HashMap<>();
         rm.put("name",name);
         rm.put("e-mail",email);
-        database.child("Users").child("id"+id).updateChildren(rm);
+        database.child("Users").child("user"+id).updateChildren(rm);
     }
 
     static void setRole(String role) {
@@ -81,7 +81,7 @@ class Database {
         return id;
     }
 
-    public static String getRole() {
+    static String getRole() {
         return role;
     }
 
@@ -93,7 +93,7 @@ class Database {
         return email;
     }
 
-    public static Uri getPhoto() {
+    static Uri getPhoto() {
         return photoUrl;
     }
 
