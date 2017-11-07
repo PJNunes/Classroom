@@ -4,6 +4,7 @@
     <string name="new_class">New Class</string>
     <string name="list_of_classes">List of Classes</string>
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="change_role">Change Role</string>
+    <string name="change_role">Change Role Screen</string>
     <string name="log_out">Log out</string>
+    <string name="set_as_default_role">Set as default role</string>
 </resources>

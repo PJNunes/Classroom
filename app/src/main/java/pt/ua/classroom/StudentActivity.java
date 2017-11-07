@@ -33,9 +33,12 @@ public class StudentActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, Login.class));
                 finish();
-                break;
             case R.id.swap_role:
                 Database.getTeachingClasses(this);
+
+            case R.id.default_role:
+                Database.setRole("student");
+
         }
 
         return super.onOptionsItemSelected(item);

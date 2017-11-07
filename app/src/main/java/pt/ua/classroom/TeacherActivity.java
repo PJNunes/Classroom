@@ -61,6 +61,8 @@ public class TeacherActivity extends AppCompatActivity implements ClassesListFra
             case R.id.swap_role:
                 studentActivity();
                 finish();
+            case R.id.default_role:
+                Database.setRole("teacher");
         }
 
         return super.onOptionsItemSelected(item);
