@@ -130,7 +130,11 @@ class Database{
                 map.put("name",s);
                 database.child("Classes").child(tempClassId).updateChildren(map);
 
-                //add class to teaching
+                map= new HashMap<>();
+                map.put("teacher",userid);
+                database.child("Classes").child(tempClassId).updateChildren(map);
+
+                //add classe to teaching
                 map= new HashMap<>();
                 map.put(tempClassId,1);
                 database.child("Users").child(userid).child("teachingClasses").updateChildren(map);
