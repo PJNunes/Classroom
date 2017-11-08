@@ -14,4 +14,7 @@
     <string name="list_of_students">List of students</string>
     <string name="map">Map</string>
     <string name="delete_class">Delete class</string>
+    <string name="voting_open_text">Open text</string>
+    <string name="voting_mc">MC</string>
+    <string name="voting_rank">Rank</string>
 </resources>
