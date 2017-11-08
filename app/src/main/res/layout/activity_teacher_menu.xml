@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pt.ua.classroom.TeacherActivityMenu">
+
+
+    <Button
+        android:id="@+id/Button_pools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Button_map"
+        android:layout_alignStart="@+id/Button_map"
+        android:layout_marginBottom="80dp"
+        android:text="@string/pools" />
+
+    <Button
+        android:id="@+id/Button_list_students"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/Button_pools"
+        android:layout_alignBottom="@+id/Button_pools"
+        android:layout_alignEnd="@+id/Button_delete_class"
+        android:text="@string/list_of_students" />
+
+    <Button
+        android:id="@+id/Button_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/Button_delete_class"
+        android:layout_alignBottom="@+id/Button_delete_class"
+        android:layout_marginEnd="16dp"
+        android:layout_toStartOf="@+id/Button_list_students"
+        android:text="@string/map" />
+
+    <Button
+        android:id="@+id/Button_delete_class"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="141dp"
+        android:layout_marginEnd="43dp"
+        android:text="@string/delete_class" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="60dp"
+        android:layout_toStartOf="@+id/Button_delete_class"
+        android:text="" />
+
+
+</RelativeLayout>
