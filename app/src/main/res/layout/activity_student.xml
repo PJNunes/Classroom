@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,42 +9,36 @@
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add class"
-        app:layout_constraintHorizontal_bias="0.472"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="125dp" />
+        android:text="@string/read_qr_code"
+        android:layout_marginTop="96dp"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pools"
-        tools:layout_editor_absoluteX="54dp"
-        tools:layout_editor_absoluteY="213dp" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Present"
-        tools:layout_editor_absoluteX="216dp"
-        tools:layout_editor_absoluteY="213dp" />
+        android:text="@string/pools"
+        android:layout_alignBaseline="@+id/button6"
+        android:layout_alignBottom="@+id/button6"
+        android:layout_toStartOf="@+id/textView3"
+        android:layout_marginEnd="23dp" />
 
     <Button
         android:id="@+id/button6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="List of classes"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="299dp" />
+        android:text="@string/list_of_classes"
+        android:layout_marginTop="112dp"
+        android:layout_below="@+id/button3"
+        android:layout_toEndOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Student"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="150dp" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_marginTop="36dp"
+        android:text="@string/student"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

@@ -7,4 +7,7 @@
     <string name="change_role">Change Role Screen</string>
     <string name="log_out">Log out</string>
     <string name="set_as_default_role">Set as default role</string>
+    <string name="student">Student</string>
+    <string name="read_qr_code">Read QR Code</string>
+    <string name="pools">Pools</string>
 </resources>
