@@ -13,7 +13,8 @@
         app:srcCompat="@drawable/common_full_open_on_phone"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="67dp" />
+        android:layout_marginTop="67dp"
+        />
 
     <TextView
         android:id="@+id/textView4"

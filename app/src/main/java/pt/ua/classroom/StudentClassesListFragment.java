@@ -13,16 +13,16 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ClassesListFragment extends Fragment {
+public class StudentClassesListFragment extends Fragment {
 
-    private static final String TAG = "ClassesListFragment";
+    private static final String TAG = "SClassesListFragment";
 
-    private ArrayAdapter<Classe> adapterItems;
+    private ArrayAdapter<StudentClasse> adapterItems;
     private ListView lvItems;
     private OnItemSelectedListener listener;
 
     interface OnItemSelectedListener {
-        void onItemSelected(Classe i);
+        void onItemSelected(StudentClasse i);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ClassesListFragment extends Fragment {
             listener = (OnItemSelectedListener) activity;
         } else {
             throw new ClassCastException(activity.toString()
-                    + " must implement ClassesListFragment.OnItemSelectedListener");
+                    + " must implement StudentClassesListFragment.OnItemSelectedListener");
         }
     }
 
@@ -40,7 +40,7 @@ public class ClassesListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Create arraylist from item fixtures
-        ArrayList<Classe> classes = Classe.getClasses();
+        ArrayList<StudentClasse> classes = StudentClasse.getClasses();
         Log.d(TAG, String.valueOf(classes.size()));
         adapterItems = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_activated_1, classes);
@@ -49,16 +49,16 @@ public class ClassesListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate view
-        View view = inflater.inflate(R.layout.fragment_classes_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_classes_list, container, false);
 
         // Bind adapter to ListView
-        lvItems = view.findViewById(R.id.lvClasses);
+        lvItems = view.findViewById(R.id.lvStudentClasses);
         lvItems.setAdapter(adapterItems);
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
                 // Retrieve item based on position
-                Classe i = adapterItems.getItem(position);
+                StudentClasse i = adapterItems.getItem(position);
                 // Fire selected event for item
                 listener.onItemSelected(i);
             }

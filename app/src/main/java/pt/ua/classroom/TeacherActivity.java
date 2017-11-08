@@ -72,7 +72,7 @@ public class TeacherActivity extends AppCompatActivity implements ClassesListFra
     @Override
     public void onItemSelected(Classe classe) {
         Database.setClasseid(classe.getId());
-        //startActivity(new Intent(this, ItemDetailActivity.class););
+        Database.startClasse(this);
     }
 
     public void onClick(View v) {

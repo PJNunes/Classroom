@@ -3,12 +3,12 @@ package pt.ua.classroom;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-class Classe implements Serializable {
+class StudentClasse implements Serializable {
     private static final long serialVersionUID = -1213949467658913456L;
     private String title,id;
-    private static ArrayList<Classe> classes = new ArrayList<>();
+    private static ArrayList<StudentClasse> classes = new ArrayList<>();
 
-    private Classe(String title,String id) {
+    private StudentClasse(String title,String id) {
         this.title = title;
         this.id = id;
     }
@@ -26,11 +26,11 @@ class Classe implements Serializable {
         return getTitle();
     }
 
-    static ArrayList<Classe> getClasses() {
+    static ArrayList<StudentClasse> getClasses() {
         return classes;
     }
 
     static void addClasse(String name, String id) {
-        classes.add(new Classe(name,id));
+        classes.add(new StudentClasse(name,id));
     }
 }

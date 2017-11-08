@@ -1,26 +1,41 @@
 package pt.ua.classroom;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.StrictMode;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class StudentActivity extends AppCompatActivity implements View.OnClickListener {
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class StudentClassesList extends AppCompatActivity{
+    private static final String TAG = "Teacher Activity";
+    private StudentClassesList activity=this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student);
-
-        //Buttons
-        Button buttonClasses = (Button) findViewById(R.id.listClasses);
-        buttonClasses.setOnClickListener(this);
+        setContentView(R.layout.activity_student_classes_list);
     }
 
     @Override
@@ -41,23 +56,11 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
             case R.id.swap_role:
                 Database.getTeachingClasses(this);
-
             case R.id.default_role:
                 Database.setRole("student");
-
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClick(View v) {
-
-        switch (v.getId()) {
-
-            case R.id.listClasses:
-               // Database.getAttendingClasses(this);
-            default:
-        }
-
-    }
 }

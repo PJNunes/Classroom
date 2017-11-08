@@ -18,7 +18,7 @@ class Database{
 
     private static DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     private static final String TAG = "Database";
-    private static String userid,role,name,email,classeid;
+    private static String userid,role,name,email,classeid,classename;
     private static Uri photoUrl;
 
     private static void createUser(int id){
@@ -115,6 +115,26 @@ class Database{
         });
     }
 
+    static <T extends AppCompatActivity> void getAttendingClasses(final T activity) {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(Classe.getClasses().size()==0) {
+                    DataSnapshot attendingClasses = dataSnapshot.child("Users").child(userid).child("attendingClasses");
+                    String classid;
+                    for (DataSnapshot d : attendingClasses.getChildren()) {
+                        StudentClasse.addClasse((String) dataSnapshot.child("Classes").child(d.getKey()).child("name").getValue(), d.getKey());
+                    }
+                }
+                activity.startActivity(new Intent(activity,StudentClassesList.class));
+                //activity.finish();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
     static void addClasse(final TeacherActivity activity, final String s){
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -147,5 +167,25 @@ class Database{
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+    }
+
+    static <T extends AppCompatActivity> void startClasse(final T activity) {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataSnapshot classe = dataSnapshot.child("Classes").child(classeid).child("name");
+                classename= (String) classe.getValue();
+
+                activity.startActivity(new Intent(activity,TeacherActivityMenu.class));
+                //activity.finish();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    public static String getClasseName() {
+        return classename;
     }
 }

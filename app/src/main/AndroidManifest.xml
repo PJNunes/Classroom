@@ -20,11 +20,8 @@
         <activity android:name=".Login" />
         <activity android:name=".TeacherActivity" />
         <activity android:name=".StudentActivity" />
-        <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TeacherActivityMenu"></activity>
+        <activity android:name=".TeacherActivityMenu" />
+        <activity android:name=".StudentClassesList" />
     </application>
 
 </manifest>
