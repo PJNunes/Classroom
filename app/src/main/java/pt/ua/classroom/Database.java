@@ -1,5 +1,6 @@
 package pt.ua.classroom;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -38,10 +39,9 @@ class Database{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userid="";
-                int ctr=0;
+                String temp="";
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    ctr++;
-                    String temp = ds.getKey();
+                    temp = ds.getKey();
                     if(ds.child("e-mail").getValue(String.class).equals(email)) {
                         userid=temp;
                         Log.d(TAG, userid);
@@ -50,8 +50,9 @@ class Database{
                     }
                 }
                 if(userid.equals("")){
-                    createUser(ctr+1);
-                    userid="user"+(ctr+1);
+                    int number=Integer.parseInt(temp.substring(4));
+                    createUser(number+1);
+                    userid="user"+(number+1);
                     role=null;
                 }
 
@@ -139,9 +140,13 @@ class Database{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 DataSnapshot classes = dataSnapshot.child("Classes");
 
-                int ctr= (int) classes.getChildrenCount();
+                String temp="";
+                for(DataSnapshot ds : classes.getChildren()) {
+                    temp = ds.getKey();
+                }
 
-                String tempClassId ="class"+(ctr+1);
+                int number=Integer.parseInt(temp.substring(5));
+                String tempClassId ="class"+(number +1);
 
                 //create Classe
                 Map<String,Object> map= new HashMap<>();
@@ -187,13 +192,33 @@ class Database{
         return classename;
     }
 
-    static void deleteAttendingClasse(StudentClassesList activity, String classId) {
-
-        database.child("Users").child(userid).child("attendingClasses").child(classId).removeValue();
-        database.child("Classes").child(classId).child("students").child(userid).removeValue();
+    static void deleteClasse(TeacherActivityMenu activity) {
+        database.child("Users").child(userid).child("teachingClasses").child(classeid).removeValue();
+        database.child("Classes").child(classeid).removeValue();
 
         //remove classe from table
-        StudentClasse.removeClasse(classId);
-        activity.recreate();
+        Classe.removeClasse(classeid);
+        StudentClasse.removeClasse(classeid);
+
+        activity.startActivity(new Intent(activity,TeacherActivity.class));
+        activity.finish();
+
+        DatabaseReference ref= database.child("Users");
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    deleteAttendingClasse(ds.getKey());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        ref.addListenerForSingleValueEvent(eventListener);
+    }
+
+    private static void deleteAttendingClasse(String id) {
+        database.child("Users").child(id).child("attendingClasses").child(classeid).removeValue();
     }
 }

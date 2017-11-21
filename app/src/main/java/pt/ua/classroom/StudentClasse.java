@@ -13,7 +13,7 @@ class StudentClasse implements Serializable {
         this.id = id;
     }
 
-    String getTitle() {
+    private String getTitle() {
         return title;
     }
 
@@ -35,7 +35,9 @@ class StudentClasse implements Serializable {
     }
 
     static void removeClasse(String classId) {
-        classes.remove(getObject(classId));
+        StudentClasse obj;
+        if ((obj=getObject(classId))!=null)
+            classes.remove(obj);
     }
 
     private static StudentClasse getObject(String id){
@@ -45,4 +47,5 @@ class StudentClasse implements Serializable {
         }
         return null;
     }
+
 }

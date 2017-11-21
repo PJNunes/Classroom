@@ -13,7 +13,7 @@ class Classe implements Serializable {
         this.id = id;
     }
 
-    String getTitle() {
+    private String getTitle() {
         return title;
     }
 
@@ -32,5 +32,19 @@ class Classe implements Serializable {
 
     static void addClasse(String name, String id) {
         classes.add(new Classe(name,id));
+    }
+
+    static void removeClasse(String classId) {
+        Classe obj;
+        if ((obj=getObject(classId))!=null)
+            classes.remove(obj);
+    }
+
+    private static Classe getObject(String id){
+        for (Classe obj:classes){
+            if (obj.getId().equals(id))
+                return obj;
+        }
+        return null;
     }
 }
