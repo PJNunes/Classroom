@@ -12,13 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="@string/list_of_classes"/>
+        android:text="@string/list_of_attending_classes"/>
 
     <fragment
         android:id="@+id/fragmentStudentClassesList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:name="pt.ua.classroom.ClassesListFragment"
+        android:name="pt.ua.classroom.StudentClassesListFragment"
         android:layout_marginStart="38dp"
         android:layout_marginEnd="38dp"
         android:layout_marginBottom="38dp"

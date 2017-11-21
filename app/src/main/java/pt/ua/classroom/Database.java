@@ -101,7 +101,6 @@ class Database{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(Classe.getClasses().size()==0) {
                     DataSnapshot teachingClasses = dataSnapshot.child("Users").child(userid).child("teachingClasses");
-                    String classid;
                     for (DataSnapshot d : teachingClasses.getChildren()) {
                         Classe.addClasse((String) dataSnapshot.child("Classes").child(d.getKey()).child("name").getValue(), d.getKey());
                     }
@@ -119,15 +118,14 @@ class Database{
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(Classe.getClasses().size()==0) {
+                if(StudentClasse.getClasses().size()==0) {
                     DataSnapshot attendingClasses = dataSnapshot.child("Users").child(userid).child("attendingClasses");
-                    String classid;
                     for (DataSnapshot d : attendingClasses.getChildren()) {
                         StudentClasse.addClasse((String) dataSnapshot.child("Classes").child(d.getKey()).child("name").getValue(), d.getKey());
                     }
                 }
                 activity.startActivity(new Intent(activity,StudentClassesList.class));
-                //activity.finish();
+                activity.finish();
             }
 
             @Override
@@ -177,7 +175,7 @@ class Database{
                 classename= (String) classe.getValue();
 
                 activity.startActivity(new Intent(activity,TeacherActivityMenu.class));
-                //activity.finish();
+                activity.finish();
             }
 
             @Override
@@ -185,7 +183,7 @@ class Database{
         });
     }
 
-    public static String getClasseName() {
+    static String getClasseName() {
         return classename;
     }
 }

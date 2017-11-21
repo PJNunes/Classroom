@@ -40,14 +40,15 @@ public class StudentClassesListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Create arraylist from item fixtures
+
         ArrayList<StudentClasse> classes = StudentClasse.getClasses();
-        Log.d(TAG, String.valueOf(classes.size()));
         adapterItems = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_activated_1, classes);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "3oCV");
         // Inflate view
         View view = inflater.inflate(R.layout.fragment_student_classes_list, container, false);
 
@@ -71,6 +72,7 @@ public class StudentClassesListFragment extends Fragment {
      * given the 'activated' state when touched.
      */
     public void setActivateOnItemClick(boolean activateOnItemClick) {
+        Log.d(TAG, "4oCV");
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
         // give items the 'activated' state when touched.
         lvItems.setChoiceMode(

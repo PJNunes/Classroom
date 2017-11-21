@@ -1,8 +1,10 @@
 package pt.ua.classroom;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +14,8 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class StudentActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "StudentActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +43,11 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, Login.class));
                 finish();
+                break;
+
             case R.id.swap_role:
                 Database.getTeachingClasses(this);
-
+                break;
             case R.id.default_role:
                 Database.setRole("student");
 
@@ -55,7 +61,7 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
 
             case R.id.listClasses:
-               // Database.getAttendingClasses(this);
+                Database.getAttendingClasses(this);
             default:
         }
 

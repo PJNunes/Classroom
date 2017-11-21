@@ -29,6 +29,7 @@ public class ClassesListFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (activity instanceof OnItemSelectedListener) {
+            Log.d(TAG, String.valueOf(activity));
             listener = (OnItemSelectedListener) activity;
         } else {
             throw new ClassCastException(activity.toString()
@@ -41,7 +42,6 @@ public class ClassesListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Create arraylist from item fixtures
         ArrayList<Classe> classes = Classe.getClasses();
-        Log.d(TAG, String.valueOf(classes.size()));
         adapterItems = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_activated_1, classes);
     }

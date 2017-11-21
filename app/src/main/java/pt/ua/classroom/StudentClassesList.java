@@ -28,14 +28,15 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentClassesList extends AppCompatActivity{
-    private static final String TAG = "Teacher Activity";
+public class StudentClassesList extends AppCompatActivity implements  StudentClassesListFragment.OnItemSelectedListener{
+    private static final String TAG = "StudentClassesList";
     private StudentClassesList activity=this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_classes_list);
+
     }
 
     @Override
@@ -54,8 +55,12 @@ public class StudentClassesList extends AppCompatActivity{
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, Login.class));
                 finish();
+                break;
+
             case R.id.swap_role:
                 Database.getTeachingClasses(this);
+                break;
+            
             case R.id.default_role:
                 Database.setRole("student");
         }
@@ -63,4 +68,8 @@ public class StudentClassesList extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onItemSelected(StudentClasse i) {
+
+    }
 }

@@ -36,9 +36,13 @@ public class TeacherActivityMenu extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, Login.class));
                 finish();
+                break;
+
             case R.id.swap_role:
                 studentActivity();
                 finish();
+                break;
+
             case R.id.default_role:
                 Database.setRole("teacher");
         }

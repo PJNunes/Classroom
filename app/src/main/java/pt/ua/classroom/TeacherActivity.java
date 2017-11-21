@@ -58,9 +58,13 @@ public class TeacherActivity extends AppCompatActivity implements ClassesListFra
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, Login.class));
                 finish();
+                break;
+
             case R.id.swap_role:
                 studentActivity();
                 finish();
+                break;
+
             case R.id.default_role:
                 Database.setRole("teacher");
         }
@@ -82,8 +86,6 @@ public class TeacherActivity extends AppCompatActivity implements ClassesListFra
             case R.id.new_classe:
                 Database.setRole("teacher");
                 newClasse();
-                break;
-
             default:
         }
 

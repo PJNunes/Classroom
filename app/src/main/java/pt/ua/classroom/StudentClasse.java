@@ -13,7 +13,7 @@ class StudentClasse implements Serializable {
         this.id = id;
     }
 
-    String getTitle() {
+    private String getTitle() {
         return title;
     }
 
