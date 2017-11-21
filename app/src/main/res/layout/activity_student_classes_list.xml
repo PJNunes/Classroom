@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -21,8 +21,17 @@
         android:name="pt.ua.classroom.StudentClassesListFragment"
         android:layout_marginStart="38dp"
         android:layout_marginEnd="38dp"
-        android:layout_marginBottom="38dp"
         tools:layout="@layout/fragment_student_classes_list"
-        android:layout_below="@+id/textView2" />
+        android:layout_below="@+id/textView2"
+        android:layout_above="@+id/delete_attending_classe"/>
 
+    <Button
+        android:id="@+id/delete_attending_classe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_class"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp" />
 </RelativeLayout>

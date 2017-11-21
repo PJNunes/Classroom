@@ -28,14 +28,23 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentClassesList extends AppCompatActivity implements  StudentClassesListFragment.OnItemSelectedListener{
+public class StudentClassesList extends AppCompatActivity implements  StudentClassesListFragment.OnItemSelectedListener, View.OnClickListener{
     private static final String TAG = "StudentClassesList";
     private StudentClassesList activity=this;
+    private String classId,className;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_classes_list);
+        classId="";
+
+        //Buttons
+        Button buttonTeacher = (Button) findViewById(R.id.delete_attending_classe);
+        buttonTeacher.setOnClickListener(this);
+
+        StudentClassesListFragment fragmentItemsList = (StudentClassesListFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentStudentClassesList);
+        fragmentItemsList.setActivateOnItemClick(true);
 
     }
 
@@ -60,7 +69,7 @@ public class StudentClassesList extends AppCompatActivity implements  StudentCla
             case R.id.swap_role:
                 Database.getTeachingClasses(this);
                 break;
-            
+
             case R.id.default_role:
                 Database.setRole("student");
         }
@@ -70,6 +79,51 @@ public class StudentClassesList extends AppCompatActivity implements  StudentCla
 
     @Override
     public void onItemSelected(StudentClasse i) {
+        classId=i.getId();
+        className=i.getTitle();
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.delete_attending_classe:
+                deleteClasse();
+            default:
+        }
+    }
+
+    private void deleteClasse() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        if (classId.equals("")){
+            builder.setTitle("You need to select a classe first!");
+
+            // Set up the buttons
+            builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        }
+        else {
+            builder.setTitle("Are you sure you want to delete this classe: "+className);
+
+            // Set up the buttons
+            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Database.deleteAttendingClasse(activity, classId);
+                }
+            });
+            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        }
+        builder.show();
     }
 }

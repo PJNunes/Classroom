@@ -186,4 +186,14 @@ class Database{
     static String getClasseName() {
         return classename;
     }
+
+    static void deleteAttendingClasse(StudentClassesList activity, String classId) {
+
+        database.child("Users").child(userid).child("attendingClasses").child(classId).removeValue();
+        database.child("Classes").child(classId).child("students").child(userid).removeValue();
+
+        //remove classe from table
+        StudentClasse.removeClasse(classId);
+        activity.recreate();
+    }
 }

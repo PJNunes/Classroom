@@ -28,7 +28,7 @@
         android:id="@+id/listClasses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/list_of_classes"
+        android:text="@string/list_of_attending_classes"
         android:layout_marginTop="112dp"
         android:layout_below="@+id/readQR"
         android:layout_toEndOf="@+id/textView3" />
