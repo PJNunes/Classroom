@@ -220,4 +220,23 @@ class Database{
     private static void deleteAttendingClasse(String id) {
         database.child("Users").child(id).child("attendingClasses").child(classeid).removeValue();
     }
+
+    static void getStudents(final TeacherMenuActivity activity) {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(Student.getStudents().size()==0) {
+                    DataSnapshot students = dataSnapshot.child("Classes").child(classeid).child("students");
+                    for (DataSnapshot s : students.getChildren()) {
+                        Student.addStudent((String) dataSnapshot.child("Users").child(s.getKey()).child("name").getValue(), s.getKey());
+                    }
+                }
+                activity.startActivity(new Intent(activity,StudentListActivity.class));
+                activity.finish();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
 }

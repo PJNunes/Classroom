@@ -48,7 +48,6 @@ public class StudentClassesListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "3oCV");
         // Inflate view
         View view = inflater.inflate(R.layout.fragment_student_classes_list, container, false);
 
@@ -72,7 +71,6 @@ public class StudentClassesListFragment extends Fragment {
      * given the 'activated' state when touched.
      */
     public void setActivateOnItemClick(boolean activateOnItemClick) {
-        Log.d(TAG, "4oCV");
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
         // give items the 'activated' state when touched.
         lvItems.setChoiceMode(

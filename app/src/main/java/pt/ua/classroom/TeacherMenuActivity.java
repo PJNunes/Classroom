@@ -28,6 +28,9 @@ public class TeacherMenuActivity extends AppCompatActivity implements View.OnCli
         //Buttons
         Button buttonTeacher = (Button) findViewById(R.id.Button_delete_class);
         buttonTeacher.setOnClickListener(this);
+
+        Button buttonList = (Button) findViewById(R.id.Button_list_students);
+        buttonList.setOnClickListener(this);
     }
 
     @Override
@@ -70,6 +73,10 @@ public class TeacherMenuActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.Button_delete_class:
                 deleteClasse();
+                break;
+            case R.id.Button_list_students:
+                Database.getStudents(this);
+                break;
             default:
         }
     }
