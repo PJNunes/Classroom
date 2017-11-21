@@ -3,7 +3,7 @@ package pt.ua.classroom;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class TeacherVoting extends AppCompatActivity {
+public class TeacherVotingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

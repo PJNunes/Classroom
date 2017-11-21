@@ -16,12 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SelectRole" />
-        <activity android:name=".Login" />
+        <activity android:name=".SelectRoleActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".TeacherActivity" />
         <activity android:name=".StudentActivity" />
-        <activity android:name=".TeacherActivityMenu" />
-        <activity android:name=".StudentClassesList" />
+        <activity android:name=".TeacherMenuActivity" />
+        <activity android:name=".StudentClassesListActivity" />
+        <activity android:name=".StudentsListActivity"></activity>
     </application>
 
 </manifest>

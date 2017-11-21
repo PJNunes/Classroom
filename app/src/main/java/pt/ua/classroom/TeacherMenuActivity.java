@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class TeacherActivityMenu extends AppCompatActivity implements View.OnClickListener{
-    private static final String TAG = "TeacherActivityMenu";
-    private TeacherActivityMenu activity=this;
+public class TeacherMenuActivity extends AppCompatActivity implements View.OnClickListener{
+    private static final String TAG = "TeacherMenuActivity";
+    private TeacherMenuActivity activity=this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class TeacherActivityMenu extends AppCompatActivity implements View.OnCli
         switch (id) {
             case R.id.log_out:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this, Login.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 finish();
                 break;
 

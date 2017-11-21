@@ -1,6 +1,5 @@
 package pt.ua.classroom;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -125,7 +124,7 @@ class Database{
                         StudentClasse.addClasse((String) dataSnapshot.child("Classes").child(d.getKey()).child("name").getValue(), d.getKey());
                     }
                 }
-                activity.startActivity(new Intent(activity,StudentClassesList.class));
+                activity.startActivity(new Intent(activity,StudentClassesListActivity.class));
                 activity.finish();
             }
 
@@ -179,7 +178,7 @@ class Database{
                 DataSnapshot classe = dataSnapshot.child("Classes").child(classeid).child("name");
                 classename= (String) classe.getValue();
 
-                activity.startActivity(new Intent(activity,TeacherActivityMenu.class));
+                activity.startActivity(new Intent(activity,TeacherMenuActivity.class));
                 activity.finish();
             }
 
@@ -192,7 +191,7 @@ class Database{
         return classename;
     }
 
-    static void deleteClasse(TeacherActivityMenu activity) {
+    static void deleteClasse(TeacherMenuActivity activity) {
         database.child("Users").child(userid).child("teachingClasses").child(classeid).removeValue();
         database.child("Classes").child(classeid).removeValue();
 

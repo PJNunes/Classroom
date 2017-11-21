@@ -3,7 +3,6 @@ package pt.ua.classroom;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,11 +10,9 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.List;
+public class SelectRoleActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class SelectRole extends AppCompatActivity implements View.OnClickListener {
-
-    private static final String TAG = "SelectRole";
+    private static final String TAG = "SelectRoleActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +44,7 @@ public class SelectRole extends AppCompatActivity implements View.OnClickListene
         switch (id) {
             case R.id.log_out:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this, Login.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 finish();
         }
 

@@ -1,36 +1,16 @@
 package pt.ua.classroom;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.StrictMode;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.json.JSONException;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class StudentClassesList extends AppCompatActivity implements  StudentClassesListFragment.OnItemSelectedListener{
-    private static final String TAG = "StudentClassesList";
-    private StudentClassesList activity=this;
+public class StudentClassesListActivity extends AppCompatActivity implements  StudentClassesListFragment.OnItemSelectedListener{
+    private static final String TAG = "StudentClassesListActivity";
+    private StudentClassesListActivity activity=this;
     private String classId;
 
     @Override
@@ -58,7 +38,7 @@ public class StudentClassesList extends AppCompatActivity implements  StudentCla
         switch (id) {
             case R.id.log_out:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this, Login.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 finish();
                 break;
 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pt.ua.classroom.SelectRole">
+    tools:context="pt.ua.classroom.SelectRoleActivity">
 
     <TextView
         android:id="@+id/textView"

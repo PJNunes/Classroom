@@ -39,7 +39,6 @@ class StudentClasse implements Serializable {
         if ((obj=getObject(classId))!=null)
             classes.remove(obj);
     }
-
     private static StudentClasse getObject(String id){
         for (StudentClasse obj:classes){
             if (obj.getId().equals(id))
@@ -47,5 +46,4 @@ class StudentClasse implements Serializable {
         }
         return null;
     }
-
 }

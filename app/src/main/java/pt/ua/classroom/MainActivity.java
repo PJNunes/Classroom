@@ -5,13 +5,11 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -20,12 +18,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -88,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         switch (id) {
             case R.id.log_out:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this, Login.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 finish();
         }
 
@@ -96,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     public void doLogin(){
-        startActivity(new Intent(this, Login.class));
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
     public void nextActivity(){
@@ -118,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     public void selectRole(){
-        startActivity(new Intent(this,SelectRole.class));
+        startActivity(new Intent(this,SelectRoleActivity.class));
     }
 
     public void studentActivity(){
