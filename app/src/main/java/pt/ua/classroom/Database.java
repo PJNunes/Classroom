@@ -21,59 +21,8 @@ class Database{
     private static String userid,role,name,email,classeid,classename;
     private static Uri photoUrl;
 
-    private static void createUser(int id){
-        Map<String,Object> rm= new HashMap<>();
-        rm.put("name",name);
-        rm.put("e-mail",email);
-        database.child("Users").child("user"+id).updateChildren(rm);
-    }
-
-    static void setId(final MainActivity classe, String displayName, String displayEmail, Uri displayPhotoUrl){
-        Log.d(TAG, String.valueOf(database));
-        name=displayName;
-        email=displayEmail;
-        photoUrl=displayPhotoUrl;
-        DatabaseReference ref= database.child("Users");
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                userid="";
-                String temp="";
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    temp = ds.getKey();
-                    if(ds.child("e-mail").getValue(String.class).equals(email)) {
-                        userid=temp;
-                        Log.d(TAG, userid);
-                        role=ds.child("role").getValue(String.class);
-                        break;
-                    }
-                }
-                if(userid.equals("")){
-                    int number=Integer.parseInt(temp.substring(4));
-                    createUser(number+1);
-                    userid="user"+(number+1);
-                    role=null;
-                }
-
-                classe.nextActivity();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        };
-        ref.addListenerForSingleValueEvent(eventListener);
-    }
-
-    static void setRole(String role) {
-        Database.role = role;
-        Map<String,Object> rm= new HashMap<>();
-        rm.put("role",role);
-        database.child("Users").child(userid).updateChildren(rm);
-    }
-
-    static void setClasseid(String id) {
-        classeid = id;
-        Student.purge();
+    static String getClasseName() {
+        return classename;
     }
 
     public static String getId() {
@@ -136,6 +85,72 @@ class Database{
         });
     }
 
+    static void getStudents(final TeacherMenuActivity activity) {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(Student.getStudents().size()==0) {
+                    DataSnapshot students = dataSnapshot.child("Classes").child(classeid).child("students");
+                    for (DataSnapshot s : students.getChildren()) {
+                        Student.addStudent((String) dataSnapshot.child("Users").child(s.getKey()).child("name").getValue(), s.getKey());
+                    }
+                }
+                activity.startActivity(new Intent(activity,StudentListActivity.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    static void setId(final MainActivity classe, String displayName, String displayEmail, final Uri displayPhotoUrl){
+        Log.d(TAG, String.valueOf(database));
+        name=displayName;
+        email=displayEmail;
+        photoUrl=displayPhotoUrl;
+        DatabaseReference ref= database.child("Users");
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userid="";
+                String temp="";
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    temp = ds.getKey();
+                    if(ds.child("e-mail").getValue(String.class).equals(email)) {
+                        userid=temp;
+                        Log.d(TAG, userid);
+                        role=ds.child("role").getValue(String.class);
+                        break;
+                    }
+                }
+                if(userid.equals("")){
+                    int number=Integer.parseInt(temp.substring(4));
+                    createUser(number+1, displayPhotoUrl);
+                    userid="user"+(number+1);
+                    role=null;
+                }
+
+                classe.nextActivity();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        ref.addListenerForSingleValueEvent(eventListener);
+    }
+
+    static void setRole(String role) {
+        Database.role = role;
+        Map<String,Object> rm= new HashMap<>();
+        rm.put("role",role);
+        database.child("Users").child(userid).updateChildren(rm);
+    }
+
+    static void setClasseid(String id) {
+        classeid = id;
+        Student.purge();
+    }
+
     static void addClasse(final TeacherActivity activity, final String s){
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -174,80 +189,6 @@ class Database{
         });
     }
 
-    static <T extends AppCompatActivity> void startClasse(final T activity) {
-        database.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                DataSnapshot classe = dataSnapshot.child("Classes").child(classeid).child("name");
-                classename= (String) classe.getValue();
-
-                activity.startActivity(new Intent(activity,TeacherMenuActivity.class));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-    }
-
-    static String getClasseName() {
-        return classename;
-    }
-
-    static void deleteClasse(TeacherMenuActivity activity) {
-        database.child("Users").child(userid).child("teachingClasses").child(classeid).removeValue();
-        database.child("Classes").child(classeid).removeValue();
-
-        //remove classe from table
-        TeachingClass.removeClasse(classeid);
-        AttendingClass.removeClasse(classeid);
-
-        activity.startActivity(new Intent(activity,TeacherActivity.class));
-        activity.finish();
-
-        DatabaseReference ref= database.child("Users");
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    deleteAttendingClasse(ds.getKey());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        };
-        ref.addListenerForSingleValueEvent(eventListener);
-    }
-
-    private static void deleteAttendingClasse(String id) {
-        database.child("Users").child(id).child("attendingClasses").child(classeid).removeValue();
-    }
-
-    static void getStudents(final TeacherMenuActivity activity) {
-        database.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(Student.getStudents().size()==0) {
-                    DataSnapshot students = dataSnapshot.child("Classes").child(classeid).child("students");
-                    for (DataSnapshot s : students.getChildren()) {
-                        Student.addStudent((String) dataSnapshot.child("Users").child(s.getKey()).child("name").getValue(), s.getKey());
-                    }
-                }
-                activity.startActivity(new Intent(activity,StudentListActivity.class));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-    }
-
-    static void removeStudent(StudentListActivity activity, String studentId) {
-        database.child("Users").child(studentId).child("attendingClasses").child(classeid).removeValue();
-        database.child("Classes").child(classeid).child("students").child(studentId).removeValue();
-        Student.removeStudent(studentId);
-        activity.recreate();
-    }
-
     static void addStudent(final StudentListActivity activity, final String name) {
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -283,9 +224,63 @@ class Database{
         });
     }
 
-    public static void postSimplePool() {
+    private static void createUser(int id, Uri displayPhotoUrl){
+        Map<String,Object> rm= new HashMap<>();
+        rm.put("name",name);
+        rm.put("e-mail",email);
+        rm.put("photo",displayPhotoUrl.toString());
+        database.child("Users").child("user"+id).updateChildren(rm);
+    }
 
+    static <T extends AppCompatActivity> void startClasse(final T activity) {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataSnapshot classe = dataSnapshot.child("Classes").child(classeid).child("name");
+                classename= (String) classe.getValue();
 
+                activity.startActivity(new Intent(activity,TeacherMenuActivity.class));
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    static void deleteClasse(TeacherMenuActivity activity) {
+        database.child("Users").child(userid).child("teachingClasses").child(classeid).removeValue();
+        database.child("Classes").child(classeid).removeValue();
+
+        //remove classe from table
+        TeachingClass.removeClasse(classeid);
+        AttendingClass.removeClasse(classeid);
+
+        activity.startActivity(new Intent(activity,TeacherActivity.class));
+        activity.finish();
+
+        DatabaseReference ref= database.child("Users");
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    deleteAttendingClasse(ds.getKey());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        ref.addListenerForSingleValueEvent(eventListener);
+    }
+
+    private static void deleteAttendingClasse(String id) {
+        database.child("Users").child(id).child("attendingClasses").child(classeid).removeValue();
+    }
+
+    static void removeStudent(StudentListActivity activity, String studentId) {
+        database.child("Users").child(studentId).child("attendingClasses").child(classeid).removeValue();
+        database.child("Classes").child(classeid).child("students").child(studentId).removeValue();
+        Student.removeStudent(studentId);
+        activity.recreate();
     }
 }
