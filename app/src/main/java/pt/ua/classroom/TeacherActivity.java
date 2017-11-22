@@ -60,8 +60,8 @@ public class TeacherActivity extends AppCompatActivity implements ClassesListFra
 
     // Handles the event when the fragment list item is selected
     @Override
-    public void onItemSelected(Classe classe) {
-        Database.setClasseid(classe.getId());
+    public void onItemSelected(TeachingClass teachingClass) {
+        Database.setClasseid(teachingClass.getId());
         Database.startClasse(this);
     }
 
@@ -70,7 +70,6 @@ public class TeacherActivity extends AppCompatActivity implements ClassesListFra
         switch (v.getId()) {
 
             case R.id.new_classe:
-                Database.setRole("teacher");
                 newClasse();
             default:
         }
@@ -78,12 +77,15 @@ public class TeacherActivity extends AppCompatActivity implements ClassesListFra
     }
 
     public void studentActivity(){
-        startActivity(new Intent(this, StudentActivity.class));
+        Intent i = new Intent(this, StudentActivity.class);
+        // set the new task and clear flags
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 
     public void newClasse(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Name of the Classe");
+        builder.setTitle("Name of the TeachingClass");
 
         // Set up the input
         final EditText input = new EditText(this);

@@ -3,7 +3,6 @@ package pt.ua.classroom;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +16,12 @@ public class StudentClassesListFragment extends Fragment {
 
     private static final String TAG = "SClassesListFragment";
 
-    private ArrayAdapter<StudentClasse> adapterItems;
+    private ArrayAdapter<AttendingClass> adapterItems;
     private ListView lvItems;
     private OnItemSelectedListener listener;
 
     interface OnItemSelectedListener {
-        void onItemSelected(StudentClasse i);
+        void onItemSelected(AttendingClass i);
     }
 
     @Override
@@ -41,7 +40,7 @@ public class StudentClassesListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Create arraylist from item fixtures
 
-        ArrayList<StudentClasse> classes = StudentClasse.getClasses();
+        ArrayList<AttendingClass> classes = AttendingClass.getClasses();
         adapterItems = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_activated_1, classes);
     }
@@ -58,7 +57,7 @@ public class StudentClassesListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
                 // Retrieve item based on position
-                StudentClasse i = adapterItems.getItem(position);
+                AttendingClass i = adapterItems.getItem(position);
                 // Fire selected event for item
                 listener.onItemSelected(i);
             }

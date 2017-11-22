@@ -17,12 +17,12 @@ public class ClassesListFragment extends Fragment {
 
     private static final String TAG = "ClassesListFragment";
 
-    private ArrayAdapter<Classe> adapterItems;
+    private ArrayAdapter<TeachingClass> adapterItems;
     private ListView lvItems;
     private OnItemSelectedListener listener;
 
     interface OnItemSelectedListener {
-        void onItemSelected(Classe i);
+        void onItemSelected(TeachingClass i);
     }
 
     @Override
@@ -41,9 +41,9 @@ public class ClassesListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Create arraylist from item fixtures
-        ArrayList<Classe> classes = Classe.getClasses();
+        ArrayList<TeachingClass> aClasses = TeachingClass.getaClasses();
         adapterItems = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_activated_1, classes);
+                android.R.layout.simple_list_item_activated_1, aClasses);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ClassesListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
                 // Retrieve item based on position
-                Classe i = adapterItems.getItem(position);
+                TeachingClass i = adapterItems.getItem(position);
                 // Fire selected event for item
                 listener.onItemSelected(i);
             }

@@ -73,6 +73,7 @@ class Database{
 
     static void setClasseid(String id) {
         classeid = id;
+        Student.purge();
     }
 
     public static String getId() {
@@ -99,14 +100,16 @@ class Database{
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(Classe.getClasses().size()==0) {
+                if(TeachingClass.getaClasses().size()==0) {
                     DataSnapshot teachingClasses = dataSnapshot.child("Users").child(userid).child("teachingClasses");
                     for (DataSnapshot d : teachingClasses.getChildren()) {
-                        Classe.addClasse((String) dataSnapshot.child("Classes").child(d.getKey()).child("name").getValue(), d.getKey());
+                        TeachingClass.addClasse((String) dataSnapshot.child("Classes").child(d.getKey()).child("name").getValue(), d.getKey());
                     }
                 }
-                activity.startActivity(new Intent(activity,TeacherActivity.class));
-                activity.finish();
+                Intent i = new Intent(activity, TeacherActivity.class);
+                // set the new task and clear flags
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                activity.startActivity(i);
             }
 
             @Override
@@ -115,17 +118,17 @@ class Database{
     }
 
     static <T extends AppCompatActivity> void getAttendingClasses(final T activity) {
+        AttendingClass.purge();
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(StudentClasse.getClasses().size()==0) {
+                if(AttendingClass.getClasses().size()==0) {
                     DataSnapshot attendingClasses = dataSnapshot.child("Users").child(userid).child("attendingClasses");
                     for (DataSnapshot d : attendingClasses.getChildren()) {
-                        StudentClasse.addClasse((String) dataSnapshot.child("Classes").child(d.getKey()).child("name").getValue(), d.getKey());
+                        AttendingClass.addClasse((String) dataSnapshot.child("Classes").child(d.getKey()).child("name").getValue(), d.getKey());
                     }
                 }
                 activity.startActivity(new Intent(activity,StudentClassesListActivity.class));
-                activity.finish();
             }
 
             @Override
@@ -147,7 +150,7 @@ class Database{
                 int number=Integer.parseInt(temp.substring(5));
                 String tempClassId ="class"+(number +1);
 
-                //create Classe
+                //create TeachingClass
                 Map<String,Object> map= new HashMap<>();
                 map.put("name",s);
                 database.child("Classes").child(tempClassId).updateChildren(map);
@@ -162,7 +165,7 @@ class Database{
                 database.child("Users").child(userid).child("teachingClasses").updateChildren(map);
 
                 //add classe to table
-                Classe.addClasse(s,tempClassId);
+                TeachingClass.addClasse(s,tempClassId);
                 activity.recreate();
             }
 
@@ -179,7 +182,6 @@ class Database{
                 classename= (String) classe.getValue();
 
                 activity.startActivity(new Intent(activity,TeacherMenuActivity.class));
-                activity.finish();
             }
 
             @Override
@@ -196,8 +198,8 @@ class Database{
         database.child("Classes").child(classeid).removeValue();
 
         //remove classe from table
-        Classe.removeClasse(classeid);
-        StudentClasse.removeClasse(classeid);
+        TeachingClass.removeClasse(classeid);
+        AttendingClass.removeClasse(classeid);
 
         activity.startActivity(new Intent(activity,TeacherActivity.class));
         activity.finish();
@@ -232,7 +234,48 @@ class Database{
                     }
                 }
                 activity.startActivity(new Intent(activity,StudentListActivity.class));
-                activity.finish();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    static void removeStudent(StudentListActivity activity, String studentId) {
+        database.child("Users").child(studentId).child("attendingClasses").child(classeid).removeValue();
+        database.child("Classes").child(classeid).child("students").child(studentId).removeValue();
+        Student.removeStudent(studentId);
+        activity.recreate();
+    }
+
+    static void addStudent(final StudentListActivity activity, final String name) {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataSnapshot classes = dataSnapshot.child("Users");
+                String id;
+                String temp="";
+                for(DataSnapshot ds : classes.getChildren()) {
+                    temp = ds.getKey();
+                }
+
+                int number=Integer.parseInt(temp.substring(4));
+                id="user"+(number +1);
+                String tempClassId =id;
+
+                //create User
+                Map<String,Object> map= new HashMap<>();
+                map.put("name",name);
+                database.child("Users").child(id).updateChildren(map);
+
+                //add user to class
+                map= new HashMap<>();
+                map.put(id,1);
+                database.child("Classes").child(classeid).child("students").updateChildren(map);
+
+                //add student to table
+                Student.addStudent(name,id);
+                activity.recreate();
             }
 
             @Override

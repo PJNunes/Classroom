@@ -20,4 +20,6 @@
     <string name="select_role">Select role:</string>
     <string name="teacher">Teacher</string>
     <string name="list_of_attending_classes">List of Attending Classes</string>
+    <string name="new_student">New Student</string>
+    <string name="remove_student">Remove Student</string>
 </resources>

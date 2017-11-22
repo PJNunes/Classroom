@@ -54,7 +54,7 @@ public class StudentClassesListActivity extends AppCompatActivity implements  St
     }
 
     @Override
-    public void onItemSelected(StudentClasse i) {
+    public void onItemSelected(AttendingClass i) {
         classId=i.getId();
     }
 }

@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private static final String TAG = "MainActivity";
     public static final String ANONYMOUS = "anonymous";
     private String mId="";
-    private MainActivity classe;
+    private MainActivity classe=this;
 
     // Firebase instance variables
     private FirebaseAuth mAuth;
@@ -37,8 +37,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Set default username is anonymous.
-        classe=this;
+
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -67,27 +66,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.log_out:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this, LoginActivity.class));
-                finish();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void doLogin(){
         startActivity(new Intent(this, LoginActivity.class));
     }
@@ -112,10 +90,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     public void selectRole(){
         startActivity(new Intent(this,SelectRoleActivity.class));
+        finish();
     }
 
     public void studentActivity(){
         startActivity(new Intent(this, StudentActivity.class));
+        finish();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
