@@ -59,8 +59,20 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
 
             case R.id.listClasses:
                 Database.getAttendingClasses(this);
+            /*case R.id.pools:
+                poolAcvitity();
+                finish();
+                break;
+                */
             default:
         }
 
     }
+    /*
+    public void poolAcvitity(){
+        startActivity(new Intent(this, PoolActivity.class));
+    }
+*/
 }
+
+

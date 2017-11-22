@@ -282,4 +282,10 @@ class Database{
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
+
+    public static void postSimplePool() {
+
+
+
+    }
 }

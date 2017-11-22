@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pt.ua.classroom.SimplePoolActivity">
+
+
+
+    <Button
+        android:id="@+id/Button_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="27dp"
+        android:text="@string/button_post" />
+
+    <TextView
+        android:id="@+id/TextView_Insert_Question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/EditText_Question"
+        android:layout_marginTop="100dp"
+        android:text="@string/textView_Insert_Question"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/EditText_Question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/TextView_Insert_Question"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+</RelativeLayout>

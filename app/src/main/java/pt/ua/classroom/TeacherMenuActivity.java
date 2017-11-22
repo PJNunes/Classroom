@@ -31,6 +31,9 @@ public class TeacherMenuActivity extends AppCompatActivity implements View.OnCli
 
         Button buttonList = (Button) findViewById(R.id.Button_list_students);
         buttonList.setOnClickListener(this);
+
+        Button buttonPool = (Button) findViewById(R.id.Button_pools);
+        buttonPool.setOnClickListener(this);
     }
 
     @Override
@@ -80,8 +83,16 @@ public class TeacherMenuActivity extends AppCompatActivity implements View.OnCli
             case R.id.Button_list_students:
                 Database.getStudents(this);
                 break;
+            case R.id.Button_pools:
+                poolActivity();
+                //finish();
+                break;
             default:
         }
+    }
+
+    public void poolActivity(){
+        startActivity(new Intent(this, PoolActivity.class));
     }
 
     private void deleteClasse() {

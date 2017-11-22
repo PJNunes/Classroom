@@ -22,4 +22,8 @@
     <string name="list_of_attending_classes">List of Attending Classes</string>
     <string name="new_student">New Student</string>
     <string name="remove_student">Remove Student</string>
+    <string name="new_pool">New Pool</string>
+    <string name="results_pools">Results Pools</string>
+    <string name="button_post">Post</string>
+    <string name="textView_Insert_Question">Insert Question:</string>
 </resources>
