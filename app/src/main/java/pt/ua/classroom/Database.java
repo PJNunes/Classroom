@@ -2,6 +2,7 @@ package pt.ua.classroom;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.util.Pools;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -282,5 +283,16 @@ class Database{
         database.child("Classes").child(classeid).child("students").child(studentId).removeValue();
         Student.removeStudent(studentId);
         activity.recreate();
+    }
+
+    static void postSimplePool(String question) {
+        //A teacher has post this question. I need to know in which subject, store in the DB and post it to students.
+        // Then manage the answers and the results
+
+        Map<String,Object> rm= new HashMap<>();
+        rm.put("question",question);
+        rm.put("type","simplePool");
+        database.child("Classes").child(classeid).child("Pools").child("Pool1").updateChildren(rm);
+
     }
 }

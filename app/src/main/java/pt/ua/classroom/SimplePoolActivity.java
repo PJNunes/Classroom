@@ -38,7 +38,7 @@ public class SimplePoolActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.Button_post:
                 String question = getText();
-                Database.postSimplePool();
+                Database.postSimplePool(question);
                 break;
             default:
         }
