@@ -114,7 +114,7 @@ class Database{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userid="";
-                String temp="";
+                String temp="user0";
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     temp = ds.getKey();
                     if(ds.child("e-mail").getValue(String.class).equals(email)) {
@@ -158,7 +158,7 @@ class Database{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 DataSnapshot classes = dataSnapshot.child("Classes");
 
-                String temp="";
+                String temp="class0";
                 for(DataSnapshot ds : classes.getChildren()) {
                     temp = ds.getKey();
                 }
@@ -196,7 +196,7 @@ class Database{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 DataSnapshot classes = dataSnapshot.child("Users");
                 String id;
-                String temp="";
+                String temp="user0";
                 for(DataSnapshot ds : classes.getChildren()) {
                     temp = ds.getKey();
                 }
@@ -223,6 +223,36 @@ class Database{
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+    }
+
+    static void addPool(final SimplePoolActivity activity, final String question, final String type) {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataSnapshot classes = dataSnapshot.child("Classes").child(classeid).child("pools");
+                String id;
+                String temp="pool0";
+                for(DataSnapshot ds : classes.getChildren()) {
+                    temp = ds.getKey();
+                }
+
+                int number=Integer.parseInt(temp.substring(4));
+                id="pool"+(number +1);
+                String tempClassId =id;
+
+                //create Pool
+                Map<String,Object> rm= new HashMap<>();
+                rm.put("question",question);
+                rm.put("type",type);
+                database.child("Classes").child(classeid).child("pools").child(id).updateChildren(rm);
+
+                activity.finish();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
     }
 
     private static void createUser(int id, Uri displayPhotoUrl){
@@ -285,14 +315,4 @@ class Database{
         activity.recreate();
     }
 
-    static void postSimplePool(String question) {
-        //A teacher has post this question. I need to know in which subject, store in the DB and post it to students.
-        // Then manage the answers and the results
-
-        Map<String,Object> rm= new HashMap<>();
-        rm.put("question",question);
-        rm.put("type","simplePool");
-        database.child("Classes").child(classeid).child("Pools").child("Pool1").updateChildren(rm);
-
-    }
 }

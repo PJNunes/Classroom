@@ -19,8 +19,10 @@
         android:name="pt.ua.classroom.ClassesListFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="38dp"
         android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/new_classe"
         tools:layout="@layout/fragment_classes_list" />
 
     <Button

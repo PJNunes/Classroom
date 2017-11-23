@@ -23,13 +23,8 @@ public class SimplePoolActivity extends AppCompatActivity implements View.OnClic
     }
 
     private String getText(){
-
         EditText editTextQuestion = (EditText) findViewById(R.id.EditText_Question);
-
-        String question = (String) editTextQuestion.getText().toString();
-
-        return question;
-
+        return editTextQuestion.getText().toString();
     }
 
     public void onClick(View v) {
@@ -38,7 +33,7 @@ public class SimplePoolActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.Button_post:
                 String question = getText();
-                Database.postSimplePool(question);
+                Database.addPool(this, question, "simple");
                 break;
             default:
         }

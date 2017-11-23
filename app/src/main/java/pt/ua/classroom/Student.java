@@ -2,6 +2,7 @@ package pt.ua.classroom;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 class Student implements Serializable {
     private static final long serialVersionUID = -1213949467658913456L;
@@ -49,8 +50,11 @@ class Student implements Serializable {
     }
 
     static void purge() {
-        for (Student obj:students){
-            students.remove(obj);
+        Iterator<Student> iter = students.iterator();
+
+        while (iter.hasNext()) {
+            Student str = iter.next();
+            iter.remove();
         }
     }
 }
