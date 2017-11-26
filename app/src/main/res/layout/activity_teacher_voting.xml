@@ -13,8 +13,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="47dp"
-        android:text="Voting"
-        android:textSize="24dp" />
+        android:text="@string/voting"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/textView6"
@@ -23,7 +23,7 @@
         android:layout_below="@+id/textView4"
         android:layout_marginTop="53dp"
         android:layout_toStartOf="@+id/button7"
-        android:text="Choose type:"
+        android:text="@string/choose_type"
         android:textSize="20sp" />
 
     <Button

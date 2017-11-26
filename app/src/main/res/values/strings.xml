@@ -29,4 +29,6 @@
     <string name="write_nfc">Write NFC</string>
     <string name="absentees">Absentees</string>
     <string name="list_of_absent_students">List of absent Students</string>
+    <string name="voting">Voting</string>
+    <string name="choose_type">Choose type:</string>
 </resources>

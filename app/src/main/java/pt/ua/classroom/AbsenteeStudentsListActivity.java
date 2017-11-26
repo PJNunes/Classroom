@@ -14,11 +14,9 @@ import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class AbsenteeStudentsListActivity extends AppCompatActivity implements  StudentListFragment.OnItemSelectedListener, View.OnClickListener{
+public class AbsenteeStudentsListActivity extends AppCompatActivity implements  AbsenteeStudentListFragment.OnItemSelectedListener{
     private static final String TAG = "AbStudentListActivity";
     private AbsenteeStudentsListActivity activity=this;
-    private String studentId="";
-    private String studentName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +59,7 @@ public class AbsenteeStudentsListActivity extends AppCompatActivity implements  
     }
 
     @Override
-    public void onItemSelected(Student i) {
-        studentId = i.getId();
-        studentName=i.getTitle();
+    public void onItemSelected(AbsenteeStudent i) {
     }
 
     public void studentActivity(){
@@ -72,12 +68,4 @@ public class AbsenteeStudentsListActivity extends AppCompatActivity implements  
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            default:
-        }
-    }
-
 }

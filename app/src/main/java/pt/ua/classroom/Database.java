@@ -111,7 +111,24 @@ class Database{
         return classeid;
     }
 
-    public static void getAbsentees(TeacherMenuActivity teacherMenuActivity) {
+    static void getAbsentees(final TeacherMenuActivity activity) {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                if(AbsenteeStudent.getStudents().size()==0) {
+                    DataSnapshot students = dataSnapshot.child("Classes").child(classeid).child("students");
+                    for (DataSnapshot s : students.getChildren()) {
+                        if(dataSnapshot.child("Users").child(s.getKey()).child("attendingClasses").child(classeid).child(currentDate).getValue()==null)
+                            AbsenteeStudent.addStudent((String) dataSnapshot.child("Users").child(s.getKey()).child("name").getValue(), s.getKey());
+                    }
+                }
+                activity.startActivity(new Intent(activity,AbsenteeStudentsListActivity.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 
     static void setId(final MainActivity classe, String displayName, String displayEmail, final Uri displayPhotoUrl){

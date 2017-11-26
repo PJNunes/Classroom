@@ -31,7 +31,7 @@
         <activity android:name=".StudentListActivity" />
         <activity android:name=".PoolActivity" />
         <activity android:name=".SimplePoolActivity" />
-        <activity android:name=".AbsenteeStudentsListActivity"></activity>
+        <activity android:name=".AbsenteeStudentsListActivity" />
     </application>
 
 </manifest>
