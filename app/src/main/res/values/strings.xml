@@ -32,4 +32,11 @@
     <string name="voting">Voting</string>
     <string name="choose_type">Choose type:</string>
     <string name="list_of_pools">List of Pools</string>
+    <string name="multiple_choice">Multiple Choice</string>
+    <string name="single_choice">Single Choice</string>
+    <string name="open_text">Open Text</string>
+    <string name="change_type">Change Type</string>
+    <string name="new_option">New Option</string>
+    <string name="remove_option">Remove Option</string>
+    <string name="option">Options</string>
 </resources>

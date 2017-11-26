@@ -74,7 +74,7 @@ public class TeacherPoolListActivity extends AppCompatActivity implements Teache
 
         switch (v.getId()) {
             case R.id.new_pool:
-                startActivity(new Intent(this, SimplePoolActivity.class));
+                startActivity(new Intent(this, CreatePoolActivity.class));
             default:
         }
     }

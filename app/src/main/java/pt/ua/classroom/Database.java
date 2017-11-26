@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -135,7 +136,7 @@ class Database{
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(AbsenteeStudent.getStudents().size()==0) {
+                if(TeacherPool.getPools().size()==0) {
                     DataSnapshot pools = dataSnapshot.child("Classes").child(classeid).child("pools");
                     for (DataSnapshot s : pools.getChildren()) {
                         TeacherPool.addPool((String)s.child("question").getValue(), s.getKey());
@@ -278,7 +279,7 @@ class Database{
         });
     }
 
-    static void addPool(final SimplePoolActivity activity, final String question, final String type) {
+    static void addPool(final CreatePoolActivity activity, final String question, final String type) {
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -297,8 +298,20 @@ class Database{
                 Map<String,Object> rm= new HashMap<>();
                 rm.put("question",question);
                 rm.put("type",type);
+
                 database.child("Classes").child(classeid).child("pools").child(id).updateChildren(rm);
 
+                if (!type.equals("open")){
+                    rm= new HashMap<>();
+
+                    ArrayList<Choices> choices = Choices.getChoices();
+                    for (Choices choice:choices)
+                        rm.put(choice.toString(),0);
+
+                    database.child("Classes").child(classeid).child("pools").child(id).child("answers").updateChildren(rm);
+                }
+
+                Choices.purge();
                 TeacherPool.addPool(question,id);
                 pool_recreate=true;
                 activity.finish();

@@ -29,7 +29,7 @@
         <activity android:name=".TeacherMenuActivity" />
         <activity android:name=".StudentClassesListActivity" />
         <activity android:name=".StudentListActivity" />
-        <activity android:name=".SimplePoolActivity" />
+        <activity android:name=".CreatePoolActivity" />
         <activity android:name=".AbsenteeStudentsListActivity" />
         <activity android:name=".TeacherPoolListActivity"></activity>
     </application>
