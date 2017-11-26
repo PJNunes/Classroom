@@ -6,10 +6,10 @@
     tools:context="pt.ua.classroom.StudentActivity">
 
     <Button
-        android:id="@+id/readQR"
+        android:id="@+id/readNFC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/read_qr_code"
+        android:text="@string/read_nfc"
         android:layout_marginTop="96dp"
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true" />
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:text="@string/list_of_attending_classes"
         android:layout_marginTop="112dp"
-        android:layout_below="@+id/readQR"
+        android:layout_below="@+id/readNFC"
         android:layout_toEndOf="@+id/textView3" />
 
     <TextView

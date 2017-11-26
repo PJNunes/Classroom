@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pt.ua.classroom">
 
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,7 +30,8 @@
         <activity android:name=".StudentClassesListActivity" />
         <activity android:name=".StudentListActivity" />
         <activity android:name=".PoolActivity" />
-        <activity android:name=".SimplePoolActivity"></activity>
+        <activity android:name=".SimplePoolActivity" />
+        <activity android:name=".AbsenteeStudentsListActivity"></activity>
     </application>
 
 </manifest>

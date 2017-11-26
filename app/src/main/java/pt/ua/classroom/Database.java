@@ -12,7 +12,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 class Database{
@@ -102,6 +105,13 @@ class Database{
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+    }
+
+    static String getClasseID() {
+        return classeid;
+    }
+
+    public static void getAbsentees(TeacherMenuActivity teacherMenuActivity) {
     }
 
     static void setId(final MainActivity classe, String displayName, String displayEmail, final Uri displayPhotoUrl){
@@ -315,4 +325,16 @@ class Database{
         activity.recreate();
     }
 
+    static void markPresence(String classId) {
+        Map<String,Object> rm= new HashMap<>();
+        rm.put(userid,1);
+        database.child("Classes").child(classId).child("students").updateChildren(rm);
+
+        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
+        rm= new HashMap<>();
+        rm.put(currentDate,1);
+        database.child("Users").child(userid).child("attendingClasses").child(classId).updateChildren(rm);
+
+    }
 }

@@ -85,7 +85,7 @@ public class TeacherActivity extends AppCompatActivity implements ClassesListFra
 
     public void newClasse(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Name of the TeachingClass");
+        builder.setTitle("Name of the Class");
 
         // Set up the input
         final EditText input = new EditText(this);
