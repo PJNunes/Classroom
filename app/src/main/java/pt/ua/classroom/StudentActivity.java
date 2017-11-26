@@ -10,6 +10,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Parcelable;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,9 +48,10 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
         //Buttons
         Button buttonClasses = (Button) findViewById(R.id.listClasses);
         buttonClasses.setOnClickListener(this);
-
         Button buttonNFC = (Button) findViewById(R.id.readNFC);
         buttonNFC.setOnClickListener(this);
+        Button buttonPool = (Button) findViewById(R.id.pools);
+        buttonPool.setOnClickListener(this);
     }
 
     @Override
@@ -120,12 +122,10 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.readNFC:
                 readNFC();
                 break;
-            /*case R.id.pools:
-                poolAcvitity();
-                finish();
+            case R.id.pools:
+                Database.getStudentPools(this);
                 break;
-                */
-            default:
+          default:
         }
 
     }

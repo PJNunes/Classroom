@@ -154,6 +154,36 @@ class Database{
         return pool_recreate;
     }
 
+    static void getStudentPools(final StudentActivity activity) {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(StudentPool.getPools().size()==0) {
+                    DataSnapshot classes = dataSnapshot.child("Users").child(userid).child("attendingClasses");
+                    for (DataSnapshot classe : classes.getChildren()) {
+
+                        String className= (String) dataSnapshot.child("Classes").child(classe.getKey()).child("name").getValue();
+                        String clId=classe.getKey();
+
+                        DataSnapshot pools = dataSnapshot.child("Classes").child(classe.getKey()).child("pools");
+
+                        for (DataSnapshot s : pools.getChildren()) {
+                            String question = (String) s.child("question").getValue();
+                            String id= clId+"_"+s.getKey();
+
+                            if (checkAnswered(id,dataSnapshot.child("Users").child(userid).child("answered")))
+                                StudentPool.addPool(className+" : "+question,id);
+                        }
+                    }
+                }
+                activity.startActivity(new Intent(activity,StudentPoolListActivity.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
     static void setPoolRecreate(boolean bool) {
         pool_recreate = bool;
     }
@@ -395,4 +425,11 @@ class Database{
         database.child("Users").child(userid).child("attendingClasses").child(classId).updateChildren(rm);
     }
 
+    private static boolean checkAnswered(String id, DataSnapshot children){
+        for (DataSnapshot s : children.getChildren()) {
+            if (id.equals(s.getKey()))
+                return false;
+        }
+        return true;
+    }
 }
