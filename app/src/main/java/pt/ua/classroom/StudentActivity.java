@@ -163,11 +163,6 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
 
         }
     }
-    /*
-    public void poolAcvitity(){
-        startActivity(new Intent(this, PoolActivity.class));
-    }
-*/
 }
 
 

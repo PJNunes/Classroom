@@ -11,45 +11,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pools"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/Button_absentees" />
+        android:layout_alignBaseline="@+id/write_nfc"
+        android:layout_alignBottom="@+id/write_nfc"
+        android:layout_toStartOf="@+id/Button_delete_class" />
 
     <Button
         android:id="@+id/Button_list_students"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/list_of_students"
-        android:layout_marginEnd="11dp"
-        android:layout_below="@+id/classeName"
+        android:layout_alignBaseline="@+id/Button_absentees"
+        android:layout_alignBottom="@+id/Button_absentees"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="100dp" />
+        android:layout_marginEnd="15dp" />
 
     <Button
         android:id="@+id/Button_absentees"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/absentees"
-        android:layout_marginEnd="40dp"
-        android:layout_alignBaseline="@+id/Button_list_students"
-        android:layout_alignBottom="@+id/Button_list_students"
-        android:layout_toStartOf="@+id/classeName" />
+        android:layout_above="@+id/Button_pools"
+        android:layout_alignStart="@+id/Button_pools"
+        android:layout_marginBottom="54dp" />
 
     <Button
         android:id="@+id/Button_delete_class"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/delete_class"
-        android:layout_below="@+id/Button_pools"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp" />
+        android:layout_marginBottom="135dp" />
 
     <Button
         android:id="@+id/write_nfc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/write_nfc"
-        android:layout_alignBaseline="@+id/Button_pools"
-        android:layout_alignBottom="@+id/Button_pools"
+        android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/Button_delete_class" />
 
     <TextView
@@ -58,7 +57,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="" />
+        android:text=""
+        android:textSize="24sp"
+        android:textStyle="bold"/>
 
 
 </RelativeLayout>

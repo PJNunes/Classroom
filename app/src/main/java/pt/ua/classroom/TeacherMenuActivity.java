@@ -147,7 +147,7 @@ public class TeacherMenuActivity extends AppCompatActivity implements View.OnCli
                 Database.getStudents(this);
                 break;
             case R.id.Button_pools:
-                poolActivity();
+                Database.getPools(this);
                 break;
             case R.id.write_nfc:
                 write_nfc();
@@ -210,11 +210,6 @@ public class TeacherMenuActivity extends AppCompatActivity implements View.OnCli
         System.arraycopy(textBytes, 0, payload, 1 + langLength, textLength);
 
         return new NdefRecord(NdefRecord.TNF_WELL_KNOWN,  NdefRecord.RTD_TEXT,  new byte[0], payload);
-    }
-
-
-    public void poolActivity(){
-        startActivity(new Intent(this, PoolActivity.class));
     }
 
     private void deleteClasse() {

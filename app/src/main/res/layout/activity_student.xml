@@ -10,35 +10,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/read_nfc"
-        android:layout_marginTop="96dp"
-        android:layout_below="@+id/textView3"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignBaseline="@+id/pools"
+        android:layout_alignBottom="@+id/pools"
+        android:layout_alignEnd="@+id/listClasses" />
 
     <Button
         android:id="@+id/pools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pools"
-        android:layout_alignBaseline="@+id/listClasses"
-        android:layout_alignBottom="@+id/listClasses"
-        android:layout_toStartOf="@+id/textView3"
-        android:layout_marginEnd="23dp" />
+        android:layout_marginBottom="50dp"
+        android:layout_above="@+id/listClasses"
+        android:layout_alignStart="@+id/listClasses" />
 
     <Button
         android:id="@+id/listClasses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/list_of_attending_classes"
-        android:layout_marginTop="112dp"
-        android:layout_below="@+id/readNFC"
-        android:layout_toEndOf="@+id/textView3" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="173dp" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
         android:text="@string/student"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
 </RelativeLayout>

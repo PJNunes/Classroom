@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="@string/list_of_absent_students"/>
+        android:text="@string/list_of_absent_students"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <fragment
         android:id="@+id/fragmentAbsenteeStudentsList"

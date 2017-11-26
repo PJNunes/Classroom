@@ -31,4 +31,5 @@
     <string name="list_of_absent_students">List of absent Students</string>
     <string name="voting">Voting</string>
     <string name="choose_type">Choose type:</string>
+    <string name="list_of_pools">List of Pools</string>
 </resources>

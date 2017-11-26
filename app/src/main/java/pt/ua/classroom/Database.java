@@ -2,7 +2,6 @@ package pt.ua.classroom;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.util.Pools;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -24,6 +23,7 @@ class Database{
     private static final String TAG = "Database";
     private static String userid,role,name,email,classeid,classename;
     private static Uri photoUrl;
+    private static boolean pool_recreate=false;
 
     static String getClasseName() {
         return classename;
@@ -129,6 +129,32 @@ class Database{
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+    }
+
+    static void getPools(final TeacherMenuActivity activity) {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(AbsenteeStudent.getStudents().size()==0) {
+                    DataSnapshot pools = dataSnapshot.child("Classes").child(classeid).child("pools");
+                    for (DataSnapshot s : pools.getChildren()) {
+                        TeacherPool.addPool((String)s.child("question").getValue(), s.getKey());
+                    }
+                }
+                activity.startActivity(new Intent(activity,TeacherPoolListActivity.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    static boolean getPoolRecreate() {
+        return pool_recreate;
+    }
+
+    static void setPoolRecreate(boolean bool) {
+        pool_recreate = bool;
     }
 
     static void setId(final MainActivity classe, String displayName, String displayEmail, final Uri displayPhotoUrl){
@@ -267,12 +293,14 @@ class Database{
                 id="pool"+(number +1);
                 String tempClassId =id;
 
-                //create Pool
+                //create TeacherPool
                 Map<String,Object> rm= new HashMap<>();
                 rm.put("question",question);
                 rm.put("type",type);
                 database.child("Classes").child(classeid).child("pools").child(id).updateChildren(rm);
 
+                TeacherPool.addPool(question,id);
+                pool_recreate=true;
                 activity.finish();
             }
 
@@ -352,6 +380,6 @@ class Database{
         rm= new HashMap<>();
         rm.put(currentDate,1);
         database.child("Users").child(userid).child("attendingClasses").child(classId).updateChildren(rm);
-
     }
+
 }

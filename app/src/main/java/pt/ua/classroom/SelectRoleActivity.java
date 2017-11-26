@@ -33,7 +33,7 @@ public class SelectRoleActivity extends AppCompatActivity implements View.OnClic
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_role, menu);
         return true;
     }
 
@@ -57,13 +57,12 @@ public class SelectRoleActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.button_teacher:
                 Database.setRole("teacher");
-                teacherActivity();
-                finish();
+                Database.getTeachingClasses(this);
                 break;
 
             case R.id.button_student:
                 Database.setRole("student");
-                studentActivity();
+                startActivity(new Intent(this, StudentActivity.class));
                 finish();
                 break;
 
@@ -71,14 +70,4 @@ public class SelectRoleActivity extends AppCompatActivity implements View.OnClic
         }
 
     }
-
-
-    public void teacherActivity(){
-        Database.getTeachingClasses(this);
-    }
-
-    public void studentActivity(){
-        startActivity(new Intent(this, StudentActivity.class));
-    }
-
 }

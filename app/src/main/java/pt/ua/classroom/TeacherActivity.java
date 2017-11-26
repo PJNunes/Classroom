@@ -14,7 +14,7 @@ import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class TeacherActivity extends AppCompatActivity implements ClassesListFragment.OnItemSelectedListener,View.OnClickListener {
+public class TeacherActivity extends AppCompatActivity implements TeachingClassesListFragment.OnItemSelectedListener,View.OnClickListener {
     private static final String TAG = "Teacher Activity";
     private TeacherActivity activity=this;
 
