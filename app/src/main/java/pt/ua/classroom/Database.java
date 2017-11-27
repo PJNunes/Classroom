@@ -217,6 +217,33 @@ class Database{
         });
     }
 
+    static void getAnsweredPool(final TeacherPoolListActivity activity, final String poolid) {
+        Choices.purge();
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(Choices.getChoices().size()==0) {
+                    poolId=poolid;
+                    DataSnapshot pools = dataSnapshot.child("Classes").child(classeid).child("pools").child(poolId);
+                    poolQuestion= (String) pools.child("question").getValue();
+                    poolType= (String) pools.child("type").getValue();
+                    if(poolType.equals("open_text"))
+                        for (DataSnapshot s : pools.child("answers").getChildren()) {
+                            Choices.addChoice((String) s.getValue());
+                        }
+                    else
+                        for (DataSnapshot s : pools.child("answers").getChildren()) {
+                            Choices.addChoice(s.getKey()+" : "+s.getValue());
+                        }
+                }
+                activity.startActivity(new Intent(activity,TeacherAnsweredActivity.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
     static void setPoolRecreate(boolean bool) {
         pool_recreate = bool;
     }

@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 public class CreatePoolActivity extends AppCompatActivity implements View.OnClickListener, ChoicesFragment.OnItemSelectedListener{
     private static final String TAG = "CreatePoolActivity";
+    private ChoicesFragment fragmentList;
     private String type;
     private String text;
 
@@ -21,6 +22,8 @@ public class CreatePoolActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_create_pool);
         type="";
         text="";
+
+        fragmentList = (ChoicesFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentChoiceList);
 
         //Edit Text
         EditText editTextQuestion = (EditText) findViewById(R.id.EditText_Question);
@@ -64,10 +67,12 @@ public class CreatePoolActivity extends AppCompatActivity implements View.OnClic
                 setVisibilityOpen();
                 break;
             case R.id.Button_multiple_choice:
+                Choices.purge();
                 type="multiple";
                 setVisibilityChoice();
                 break;
             case R.id.Button_single_choice:
+                Choices.purge();
                 type="single";
                 setVisibilityChoice();
                 break;
@@ -178,12 +183,8 @@ public class CreatePoolActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Choices.addChoice(input.getText().toString());
-                try {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentChoiceList, ChoicesFragment.class.newInstance()).commit();
-                } catch (InstantiationException | IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragmentChoiceList, ChoicesFragment.class.newInstance()).commit();
+                fragmentList.notifyAdapter();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

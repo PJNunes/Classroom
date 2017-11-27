@@ -1,8 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pt.ua.classroom.TeacherAnsweredActivity">
+    tools:context="pt.ua.classroom.CreatePoolActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/TextView_Question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:text=""
+        android:textSize="24sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <fragment
+        android:id="@+id/fragmentChoiceList"
+        android:name="pt.ua.classroom.ChoicesFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_choices"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="38dp"
+        android:layout_below="@+id/TextView_Question"
+        android:layout_above="@+id/Button_post"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/Button_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="27dp"
+        android:text="@string/delete_pool"/>
+
+</RelativeLayout>

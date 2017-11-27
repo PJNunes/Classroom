@@ -66,8 +66,7 @@ public class TeacherPoolListActivity extends AppCompatActivity implements Teache
     // Handles the event when the fragment list item is selected
     @Override
     public void onItemSelected(TeacherPool pool) {
-        //Database.setClasseid(pool.getId());
-        //Database.startClasse(this);
+        Database.getAnsweredPool(this,pool.getId());
     }
 
     public void onClick(View v) {

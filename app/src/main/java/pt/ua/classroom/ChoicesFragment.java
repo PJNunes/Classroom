@@ -71,4 +71,8 @@ public class ChoicesFragment extends Fragment {
     public void setActivateOnItemClick(int choiceModeMultiple) {
         lvItems.setChoiceMode(choiceModeMultiple);
     }
+
+    public void notifyAdapter() {
+        adapterItems.notifyDataSetChanged();
+    }
 }

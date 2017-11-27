@@ -40,4 +40,5 @@
     <string name="remove_option">Remove Option</string>
     <string name="option">Options</string>
     <string name="answer">Answer</string>
+    <string name="delete_pool">Delete Pool</string>
 </resources>
