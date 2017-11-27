@@ -554,4 +554,27 @@ class Database{
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
+
+    static void deletePost(TeacherAnsweredActivity activity) {
+        database.child("Classes").child(classeid).child("pools").child(poolId).removeValue();
+
+        //remove classe from table
+        TeacherPool.removePool(poolId);
+        pool_recreate=true;
+        activity.finish();
+
+        DatabaseReference ref= database.child("Users");
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    database.child("Users").child(ds.getKey()).child("answered").child(classeid+"_"+poolId).removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        ref.addListenerForSingleValueEvent(eventListener);
+    }
 }

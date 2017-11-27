@@ -42,6 +42,7 @@ public class TeacherAnsweredActivity extends AppCompatActivity implements View.O
     }
 
     private void deletePost() {
+        Database.deletePost(this);
     }
 
     @Override
