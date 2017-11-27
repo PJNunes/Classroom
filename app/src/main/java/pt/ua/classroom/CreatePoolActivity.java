@@ -183,7 +183,6 @@ public class CreatePoolActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Choices.addChoice(input.getText().toString());
-                //getSupportFragmentManager().beginTransaction().replace(R.id.fragmentChoiceList, ChoicesFragment.class.newInstance()).commit();
                 fragmentList.notifyAdapter();
             }
         });

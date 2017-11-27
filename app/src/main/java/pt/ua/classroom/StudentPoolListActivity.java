@@ -25,7 +25,8 @@ public class StudentPoolListActivity extends AppCompatActivity implements Studen
         super.onResume();
         if(Database.getPoolRecreate()){
             Database.setPoolRecreate(false);
-            recreate();
+            StudentPoolListFragment fragmentList = (StudentPoolListFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentStPoolList);
+            fragmentList.notifyAdapter();
         }
     }
 

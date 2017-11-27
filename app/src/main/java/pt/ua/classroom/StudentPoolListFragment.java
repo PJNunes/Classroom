@@ -64,4 +64,8 @@ public class StudentPoolListFragment extends Fragment {
         });
         return view;
     }
+
+    public void notifyAdapter() {
+        adapterItems.notifyDataSetChanged();
+    }
 }

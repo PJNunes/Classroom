@@ -64,4 +64,8 @@ public class TeacherPoolListFragment extends Fragment {
         });
         return view;
     }
+
+    public void notifyAdapter() {
+        adapterItems.notifyDataSetChanged();
+    }
 }

@@ -29,7 +29,8 @@ public class TeacherPoolListActivity extends AppCompatActivity implements Teache
         super.onResume();
         if(Database.getPoolRecreate()){
             Database.setPoolRecreate(false);
-            recreate();
+            TeacherPoolListFragment fragmentList = (TeacherPoolListFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentPoolList);
+            fragmentList.notifyAdapter();
         }
     }
 
