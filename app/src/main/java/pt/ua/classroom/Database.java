@@ -22,12 +22,20 @@ class Database{
 
     private static DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     private static final String TAG = "Database";
-    private static String userid,role,name,email,classeid,classename;
+    private static String userid,role,name,email,classeid,classename,poolQuestion,poolType,poolId;
     private static Uri photoUrl;
     private static boolean pool_recreate=false;
 
     static String getClasseName() {
         return classename;
+    }
+
+    static String getPoolQuestion() {
+        return poolQuestion;
+    }
+
+    static String getPoolType() {
+        return poolType;
     }
 
     public static String getId() {
@@ -177,6 +185,31 @@ class Database{
                     }
                 }
                 activity.startActivity(new Intent(activity,StudentPoolListActivity.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    static void getToAnswerPool(final StudentPoolListActivity activity, final String poolid) {
+        Choices.purge();
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(Choices.getChoices().size()==0) {
+                    String[] parts = poolid.split("_");
+                    classeid = parts[0];
+                    poolId = parts[1];
+                    DataSnapshot pools = dataSnapshot.child("Classes").child(classeid).child("pools").child(poolId);
+                    poolQuestion= (String) pools.child("question").getValue();
+                    poolType= (String) pools.child("type").getValue();
+                    if(!poolType.equals("open_text"))
+                        for (DataSnapshot s : pools.child("answers").getChildren()) {
+                            Choices.addChoice(s.getKey());
+                        }
+                }
+                activity.startActivity(new Intent(activity,AnswerPoolActivity.class));
             }
 
             @Override
@@ -431,5 +464,67 @@ class Database{
                 return false;
         }
         return true;
+    }
+
+    static void addAnswer(final AnswerPoolActivity activity, final String answer, final ArrayList<String> choices) {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataSnapshot pool = dataSnapshot.child("Classes").child(classeid).child("pools").child(poolId);
+                switch (poolType) {
+                    case "open_text": {
+                        String op = "answer0";
+                        for (DataSnapshot ds : pool.child("answers").getChildren()) {
+                            op = ds.getKey();
+                        }
+
+                        int number = Integer.parseInt(op.substring(6));
+                        String id = "answer" + (number + 1);
+
+
+                        //add answer
+                        Map<String, Object> rm = new HashMap<>();
+                        rm.put(id, answer);
+
+                        database.child("Classes").child(classeid).child("pools").child(poolId).child("answers").updateChildren(rm);
+                        break;
+                    }
+                    case "single": {
+                        long value = (long) pool.child("answers").child(answer).getValue();
+
+                        //add answer
+                        Map<String, Object> rm = new HashMap<>();
+                        rm.put(answer, value + 1);
+
+                        database.child("Classes").child(classeid).child("pools").child(poolId).child("answers").updateChildren(rm);
+                        break;
+                    }
+                    case "multiple":
+                        for (String answer : choices) {
+                            long value = (long) pool.child("answers").child(answer).getValue();
+                            //add answer
+                            Map<String, Object> rm = new HashMap<>();
+                            rm.put(answer, value + 1);
+
+                            database.child("Classes").child(classeid).child("pools").child(poolId).child("answers").updateChildren(rm);
+                        }
+                        break;
+                }
+
+                //add answered
+                Map<String,Object> rm= new HashMap<>();
+                rm.put(classeid+"_"+poolId,1);
+
+                database.child("Users").child(userid).child("answered").updateChildren(rm);
+
+                Choices.purge();
+                StudentPool.removePool(classeid+"_"+poolId);
+                pool_recreate=true;
+                activity.finish();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 }

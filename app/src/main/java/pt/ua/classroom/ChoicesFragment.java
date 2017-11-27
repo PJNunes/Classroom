@@ -19,6 +19,7 @@ public class ChoicesFragment extends Fragment {
 
     private ArrayAdapter<Choices> adapterItems;
     private OnItemSelectedListener listener;
+    private ListView lvItems;
 
     interface OnItemSelectedListener {
         void onItemSelected(Choices i);
@@ -51,7 +52,7 @@ public class ChoicesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_choices, container, false);
 
         // Bind adapter to ListView
-        ListView lvItems = view.findViewById(R.id.lvChoices);
+        lvItems = view.findViewById(R.id.lvChoices);
         lvItems.setAdapter(adapterItems);
         lvItems.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,10 +60,15 @@ public class ChoicesFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
                 // Retrieve item based on position
                 Choices i = adapterItems.getItem(position);
+
                 // Fire selected event for item
                 listener.onItemSelected(i);
             }
         });
         return view;
+    }
+
+    public void setActivateOnItemClick(int choiceModeMultiple) {
+        lvItems.setChoiceMode(choiceModeMultiple);
     }
 }

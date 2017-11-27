@@ -99,8 +99,21 @@ public class CreatePoolActivity extends AppCompatActivity implements View.OnClic
             builder.show();
         }
         else {
-            Database.addPool(this, question, type);
+            if (!type.equals("open_text") && Choices.getChoices().size()==0){
+                builder = new AlertDialog.Builder(this);
+                builder.setTitle("You need to insert at least one choice!");
+                // Set up the buttons
+                builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                }
+                    });
 
+                builder.show();
+            }
+            else
+                Database.addPool(this, question, type);
         }
     }
 

@@ -21,6 +21,15 @@ public class StudentPoolListActivity extends AppCompatActivity implements Studen
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        if(Database.getPoolRecreate()){
+            Database.setPoolRecreate(false);
+            recreate();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -52,7 +61,6 @@ public class StudentPoolListActivity extends AppCompatActivity implements Studen
     // Handles the event when the fragment list item is selected
     @Override
     public void onItemSelected(StudentPool pool) {
-        //Database.setClasseid(pool.getId());
-        //Database.startClasse(this);
+        Database.getToAnswerPool(this,pool.getId());
     }
 }

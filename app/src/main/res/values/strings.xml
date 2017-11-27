@@ -39,4 +39,5 @@
     <string name="new_option">New Option</string>
     <string name="remove_option">Remove Option</string>
     <string name="option">Options</string>
+    <string name="answer">Answer</string>
 </resources>
