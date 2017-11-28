@@ -121,6 +121,7 @@ class Database{
     }
 
     static void getAbsentees(final TeacherMenuActivity activity) {
+        AbsenteeStudent.purge();
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
