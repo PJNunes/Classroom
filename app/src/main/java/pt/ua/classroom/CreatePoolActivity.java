@@ -159,12 +159,7 @@ public class CreatePoolActivity extends AppCompatActivity implements View.OnClic
         else {
             Choices.removeChoice(text);
             text="";
-            try {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentChoiceList, ChoicesFragment.class.newInstance()).commit();
-            } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
+            fragmentList.notifyAdapter();
         }
     }
 
