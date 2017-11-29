@@ -22,19 +22,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SelectRoleActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".TeacherActivity" />
-        <activity android:name=".StudentActivity" />
-        <activity android:name=".TeacherMenuActivity" />
-        <activity android:name=".StudentClassesListActivity" />
-        <activity android:name=".StudentListActivity" />
-        <activity android:name=".CreatePoolActivity" />
-        <activity android:name=".AbsenteeStudentsListActivity" />
-        <activity android:name=".TeacherPoolListActivity" />
-        <activity android:name=".StudentPoolListActivity" />
-        <activity android:name=".AnswerPoolActivity" />
-        <activity android:name=".TeacherAnsweredActivity"></activity>
+        <activity android:name=".SelectRoleActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TeacherActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".StudentActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TeacherMenuActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".StudentClassesListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".StudentListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CreatePoolActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AbsenteeStudentsListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TeacherPoolListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".StudentPoolListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AnswerPoolActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TeacherAnsweredActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
